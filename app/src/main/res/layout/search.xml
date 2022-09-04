@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <CheckBox
+       android:layout_width="400dp"
+       android:layout_height="wrap_content"
+       android:text="meetings"
+       android:id="@+id/meet"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="quiz"
+        android:id="@+id/quiz"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tests"
+        android:id="@+id/test"/>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="courses"
+        android:id="@+id/course"/>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle3"
+        android:text="search" />
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bac12"
+    tools:context=".Materials.Quiz.Quiz_result">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+
+        android:gravity="right"
+
+
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark" />
+    <Spinner
+
+        android:id="@+id/spinner"
+
+        android:layout_width="328dp"
+
+        android:layout_height="46dp"
+        android:layout_gravity="center"
+        android:background="@drawable/white"
+        android:prompt="@string/spinner_title" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+
+        android:gravity="center"
+        android:text="answers"
+        android:id="@+id/question"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:id="@+id/list"
+        android:layout_height="match_parent"/>
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="430dp"
+        android:layout_height="106dp"
+        android:background="@color/colorgreen"
+        android:gravity="center"
+        android:text="add answers"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:hint="add answer"
+        android:id="@+id/addans"/>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle2"
+        android:text="add"
+        android:textSize="25dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_gravity="center"
+        android:id="@+id/adda"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="187dp"
+        android:id="@+id/lv"
+        >
+
+    </ListView>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle2"
+        android:text="save"
+        android:textSize="25dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_gravity="center"
+        android:id="@+id/save"/>
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Materials.Record.Show_Recordings">
+    <LinearLayout
+        android:id="@+id/toolbarofspecificchat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="0dp"
+        android:background="#075e54"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="59dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            app:tint="@color/colorPrimaryDark"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="327dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:text="graphs records"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+
+            android:textStyle="bold"
+            app:tint="@color/colorPrimaryDark" />
+
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation" >
+            <ListView
+                android:layout_width="match_parent"
+                android:id="@+id/lv"
+                android:layout_height="match_parent">
+
+            </ListView>
+        </FrameLayout>
+        <com.flarebit.flarebarlib.FlareBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:layout_gravity="bottom" />
+    </FrameLayout>
+</LinearLayout>

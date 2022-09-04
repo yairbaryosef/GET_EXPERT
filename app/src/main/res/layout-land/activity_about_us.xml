@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".About_US.About_us">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/toolbarofspecificchat"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+
+        android:background="#075e54"
+        android:orientation="vertical">
+
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle2"
+            android:text="get STARTED"
+            android:textColor="@color/white"
+            android:id="@+id/get_Started"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/colorgreen"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/student_hat" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+android:gravity="center"
+
+                  android:text="as a student yot think tour learning process could be better? \n as a teacher you have leaning materials and you don't earn from it? \n your place is with us!"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Serenade"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/goal" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:text="OUR goal"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                     android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:text="our goal is to improve the learning process in students by allowing to teachers to upload every material they have to the platform and start earning money from it!"
+
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/communications" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center"
+                    android:text="communicate with teachers"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAllCaps="true"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                  android:text="communicate with teachers and start to impact on the materials that appear in the platform!"
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Serenade"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/goal" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:text="OUR goal"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:text="our goal is to improve the learning process in students by allowing to teachers to upload every material they have to the platform and start earning money from it!"
+
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Serenade"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/goal" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:text="OUR goal"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:text="our goal is to improve the learning process in students by allowing to teachers to upload every material they have to the platform and start earning money from it!"
+
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout><LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="273dp"
+        android:background="@color/Serenade"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="78dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="119dp"
+
+                android:background="@drawable/goal" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="41dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:text="OUR goal"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+
+                android:textSize="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:text="our goal is to improve the learning process in students by allowing to teachers to upload every material they have to the platform and start earning money from it!"
+
+                android:textSize="14dp"
+
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout><LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="273dp"
+        android:background="@color/Serenade"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="78dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="119dp"
+
+                android:background="@drawable/goal" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="41dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:text="OUR goal"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+
+                android:textSize="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:text="our goal is to improve the learning process in students by allowing to teachers to upload every material they have to the platform and start earning money from it!"
+
+                android:textSize="14dp"
+
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+        
+        
+    </LinearLayout>
+</ScrollView>

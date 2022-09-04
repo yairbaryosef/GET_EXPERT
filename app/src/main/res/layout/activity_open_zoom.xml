@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Materials.Meeting.OpenZoom">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FBC02D"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="58dp" />
+
+    <TextView
+        android:layout_width="293dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:gravity="center"
+        android:text="open meeting"
+        android:textSize="40dp" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="75dp"
+        android:id="@+id/zoom"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:background="@drawable/zoom"/>
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="id" />
+
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password" />
+    <EditText
+        android:id="@+id/link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="link" />
+
+
+    <EditText
+        android:id="@+id/subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="subject" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="93dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/description"
+            android:layout_width="97dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@drawable/des" />
+
+        <TextView
+            android:layout_width="38dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="81dp"
+            android:layout_height="97dp"
+            android:layout_gravity="center"
+            android:id="@+id/schedule"
+            android:background="@drawable/sch" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="time (minutes)" />
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="price" />
+
+
+    <EditText
+        android:id="@+id/place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="location" />
+    <EditText
+        android:id="@+id/limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="limit students" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/meet"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:text="add meeting"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+</LinearLayout>

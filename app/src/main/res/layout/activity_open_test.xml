@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Materials.Test.Open_Test">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FBC02D"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="58dp" />
+
+    <TextView
+        android:layout_width="293dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle3"
+        android:gravity="center"
+        android:text="open test"
+        android:textSize="40dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password for the entrance" />
+
+
+
+   <com.google.android.material.textfield.TextInputEditText
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/subject"
+       android:drawableLeft="@mipmap/ic_launcher"
+       android:text="subject"
+       />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="78dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/description"
+            android:layout_width="97dp"
+            android:layout_height="97dp"
+            android:layout_gravity="center"
+            android:background="@drawable/des" />
+
+        <TextView
+            android:layout_width="38dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/pdf"
+            android:layout_width="97dp"
+            android:layout_height="97dp"
+            android:layout_gravity="center"
+            android:background="@drawable/pdf" />
+
+        <TextView
+            android:layout_width="38dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="price" />
+    <EditText
+        android:id="@+id/limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="limit students" />
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/addtest"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/circle3"
+        android:text="add test"
+        android:textSize="25dp" />
+</LinearLayout>

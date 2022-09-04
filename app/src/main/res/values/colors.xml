@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorgreen">#55D394</color>
+    <color name="Serenade">#FBE3D1</color>
+    <color name="Maroon">#6A0000</color>
+    <color name="Deep_Teal">#064439</color>
+    <color name="Orange_white">#EEE7CE</color>
+    <color name="red">#FA0101</color>
+</resources>

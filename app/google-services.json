@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "433864646392",
+    "firebase_url": "https://mula-82f9c-default-rtdb.firebaseio.com",
+    "project_id": "mula-82f9c",
+    "storage_bucket": "mula-82f9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433864646392:android:bf1dd8126978e6c75d650d",
+        "android_client_info": {
+          "package_name": "com.example.dreamfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433864646392-0mgucn7m3rgtb3rgsnu3ctcmr41hefs3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaC5vwQp6b8Bd4wipxrQznGaR0Ct_kQHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433864646392-0mgucn7m3rgtb3rgsnu3ctcmr41hefs3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

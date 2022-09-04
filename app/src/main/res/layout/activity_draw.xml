@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PDF_Controller.Draw">
+
+    <com.kyanogen.signatureview.SignatureView
+        android:id="@+id/signature_view"
+        android:layout_width="match_parent"
+        android:layout_height="674dp"
+        app:backgroundColor="#ffffff"
+        app:enableSignature="true"
+        app:penColor="#000000"
+        app:penSize="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/white"
+        android:layout_height="match_parent" >
+
+        <SeekBar
+            android:layout_width="197dp"
+            android:layout_height="match_parent"
+            android:id="@+id/seekbar"/>
+        <Button
+            android:id="@+id/erase"
+            android:layout_width="71dp"
+
+            android:layout_height="match_parent"
+            android:background="@drawable/erase" />
+        <Button
+            android:id="@+id/draw"
+            android:layout_width="71dp"
+
+            android:layout_height="match_parent"
+            android:background="@drawable/pen" />
+        <Button
+            android:id="@+id/downloud"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:background="@mipmap/downloud" />
+
+    </LinearLayout>
+</LinearLayout>

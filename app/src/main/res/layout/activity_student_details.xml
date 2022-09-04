@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Student_Controller.Student_details">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp" />
+
+
+    <Button
+        android:id="@+id/deal"
+        android:layout_width="229dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:text="add deal"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp" />
+
+    <Button
+        android:id="@+id/chat"
+        android:layout_width="225dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:text="my chats"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="229dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:text="Update details"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp" />
+
+    <Button
+        android:id="@+id/record"
+        android:layout_width="229dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle2"
+        android:text="recordings"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="52dp" />
+        <Button
+            android:id="@+id/search"
+            android:layout_width="229dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle2"
+            android:text="search"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="52dp" />
+        <Button
+            android:id="@+id/meeting"
+            android:layout_width="229dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle2"
+            android:text="meetings"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

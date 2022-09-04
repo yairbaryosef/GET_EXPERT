@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".About_US.About_us">
+
+        <LinearLayout
+            android:id="@+id/toolbarofspecificchat"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+
+            android:background="#075e54"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="72dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle2"
+                android:text="get STARTED"
+                android:textColor="@color/white"
+                android:id="@+id/get_Started"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="62dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="122dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle2"
+                android:text="show teachers page"
+                android:textColor="@color/white"
+                android:id="@+id/teacher"
+                android:textStyle="bold"/>
+
+
+
+        </LinearLayout>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/colorgreen"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/student_hat" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="Wanna be an expert student? \n join now to and gain an expert!"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Serenade"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/goal" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:text="OUR goal"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:text="our goal is to improve the learning process of students by allowing to teachers to upload materials to the platform and start earning money from it!"
+
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/communications"
+                    android:baselineAligned="false" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:gravity="center"
+                    android:text="communicate with teachers"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAllCaps="true"
+                    android:textSize="25dp"
+
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:text="communicate with teachers and start to impact on the materials that appear in the platform!"
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Orange_white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/zoom_class" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:text="join meetings today"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                    android:textSize="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="and start a lesson with the most adjusted teachers for you"
+
+                    android:textSize="14dp"
+
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="273dp"
+            android:background="@color/Maroon"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="116dp"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="56dp"
+                    android:layout_height="78dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="119dp"
+
+                    android:background="@drawable/test_icon" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="41dp"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Are you sure you are ready for the test? Let's test it with quizzes and tests"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+
+                    android:textSize="25dp"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+                <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="273dp"
+        android:background="#E66D12"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="116dp"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="56dp"
+                android:layout_height="78dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="119dp"
+
+                android:background="@drawable/record" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="41dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="missed a class? watch the recording!"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+
+                android:textSize="25dp"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="273dp"
+                    android:background="@color/Deep_Teal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="116dp"
+                        android:layout_height="match_parent"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="56dp"
+                            android:layout_height="78dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="119dp"
+
+                            android:background="@drawable/questions_and_answers" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="41dp"
+                        android:layout_height="match_parent"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="want a teacher that will be available for you? join his QA! "
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+
+                            android:textSize="25dp"/>
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="273dp"
+                    android:background="#FFEB3B"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="116dp"
+                        android:layout_height="match_parent"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="56dp"
+                            android:layout_height="78dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="119dp"
+
+                            android:background="@drawable/student_goal" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="41dp"
+                        android:layout_height="match_parent"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="get feedback from the teachers, and show your progress"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="25dp"/>
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+    </LinearLayout>
+        </ScrollView>
+    </HorizontalScrollView>
+
+
+</LinearLayout>

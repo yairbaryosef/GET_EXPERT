@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/toolbarofspecificchat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="0dp"
+        android:background="#075e54"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="59dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            />
+
+
+
+
+        <TextView
+            android:layout_width="12dp"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:id="@+id/line1"
+        android:layout_height="match_parent"/>
+</LinearLayout>

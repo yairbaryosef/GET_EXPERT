@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Student_Controller.scrolling_activity"
+    android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/toolbarofspecificchat"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="0dp"
+                android:background="#075e54"
+                android:orientation="horizontal">
+
+
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="59dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_baseline_arrow_back_24"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    />
+
+
+                <TextView
+                    android:layout_width="284dp"
+                    android:layout_height="match_parent" />
+                <Button
+                    android:id="@+id/my_details"
+                    android:layout_width="59dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/folder"
+                        />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="#075e54"
+                android:gravity="center"
+                android:text="Student activity"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                android:textStyle="bold"
+
+           />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="273dp"
+                android:background="@drawable/exam_bacground"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:layout_width="123dp"
+                    android:layout_height="73dp"
+                    android:background="@drawable/circle2"
+                    android:text="my result"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/show_result"/>
+
+
+
+            </LinearLayout>
+
+
+            <CalendarView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/calender"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="218dp"
+                android:background="@drawable/school"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="149dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circle2"
+                    android:text="get started"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/get_Started"/>
+
+                <TextView
+                    android:layout_width="166dp"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+</ScrollView>

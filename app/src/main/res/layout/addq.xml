@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="398dp"
+        android:layout_height="95dp"
+        android:background="@drawable/setting"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="18dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="321dp"
+            android:layout_height="match_parent"
+            android:text="question with custom answers"
+            android:textSize="20dp" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter question"
+        android:id="@+id/que"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter answer"
+        android:id="@+id/ans"/>
+
+    <Button
+        android:layout_width="104dp"
+        android:layout_height="94dp"
+        android:id="@+id/save"
+        android:layout_gravity="center"
+        android:background="@drawable/save" />
+</LinearLayout>
