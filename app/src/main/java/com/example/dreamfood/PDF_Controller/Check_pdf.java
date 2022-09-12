@@ -1,8 +1,5 @@
 package com.example.dreamfood.PDF_Controller;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.dreamfood.BusinessLayer.Classes.fileinfomodel;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
+import com.example.dreamfood.BusinessLayer.Classes.fileinfomodel;
 import com.example.dreamfood.BusinessLayer.Classes.grade;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
@@ -36,7 +37,7 @@ public class Check_pdf extends AppCompatActivity implements View.OnClickListener
     Dialog d;
     EditText getGrade,comments;
     Button back,check,upload,save;
-   String title="",url="",email="",filename="",student1="";
+   String title="",url="",email="",filename="",student1="",subject="";
    Student student;
    Teacher teacher;
 Strings constant=new Strings();
@@ -46,6 +47,7 @@ String key;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_pdf);
         back=findViewById(R.id.back);
+        subject=getIntent().getStringExtra("subject");
 filename=getIntent().getStringExtra("filename");
         student1=getIntent().getStringExtra("student");
         back.setOnClickListener(this);
@@ -118,9 +120,9 @@ filename=getIntent().getStringExtra("filename");
             grade.comments=comments.getText().toString();
             try {
 
-
+                grade.subject=subject;
                 if (!title.equals("")) {
-                    grade.subject = title;
+                    grade.title = title;
                 }
                 if (!url.equals("")) {
                     grade.url = url;

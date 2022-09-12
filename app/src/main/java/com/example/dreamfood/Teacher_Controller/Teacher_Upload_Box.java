@@ -52,11 +52,12 @@ public class Teacher_Upload_Box extends AppCompatActivity implements AdapterView
 
 
                         arrayList.add("show answers");
+
                         for(fileinfomodel f:teacher.tests){
                             arrayList.add(f.filename+" "+f.teacherEmail);
                             files.put(f.filename+" "+f.teacherEmail,f);
                         }
-                        dataAdapter = new ArrayAdapter<String>(Teacher_Upload_Box.this, android.R.layout.select_dialog_multichoice, arrayList);
+                        dataAdapter = new ArrayAdapter<String>(Teacher_Upload_Box.this, android.R.layout.simple_list_item_1, arrayList);
                         spinner.setAdapter(dataAdapter);
                         spinner.setOnItemSelectedListener(Teacher_Upload_Box.this);
                     }
@@ -79,6 +80,7 @@ public class Teacher_Upload_Box extends AppCompatActivity implements AdapterView
         if(!item.equals("show answers")) {
             Intent intent = new Intent(this, Check_pdf.class);
             fileinfomodel f = files.get(item);
+            intent.putExtra("subject", f.subject);
             intent.putExtra("url", f.fileurl);
             intent.putExtra("filename",f.filename);
             intent.putExtra("student",f.teacherEmail);

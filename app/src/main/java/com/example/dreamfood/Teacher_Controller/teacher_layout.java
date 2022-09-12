@@ -34,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
@@ -42,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class teacher_layout extends AppCompatActivity implements View.OnClickListener {
 Button add,course,details,sub;
 Strings con=new Strings();
+JSONObject jsonObject;
 CircleImageView image,profile_teacher;
 String email;
 Teacher teacher;
@@ -50,16 +53,20 @@ Teacher teacher;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_layout);
         init();
+        jsonObject=new JSONObject();
         email=getSharedPreferences("email",0).getString("email",null);
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.teacher).child(email);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 teacher=snapshot.getValue(Teacher.class);
-                try{
-                    profile_teacher.setBackground(null);
-                    Picasso.get().load(teacher.profile_url).into(profile_teacher);
 
+
+                try {
+                    if (!teacher.profile_url.equals("")) {
+                        Picasso.get().load(teacher.profile_url).into(profile_teacher);
+                        profile_teacher.setBackground(null);
+                    }
                 }
                 catch(Exception e){
 
@@ -77,8 +84,7 @@ Teacher teacher;
     public void init(){
         add=(Button) findViewById(R.id.add);
         add.setOnClickListener(this);
-        course=(Button) findViewById(R.id.course);
-        course.setOnClickListener(this);
+
         sub=(Button) findViewById(R.id.sub);
         sub.setOnClickListener(this);
         profile_teacher= findViewById(R.id.textView);

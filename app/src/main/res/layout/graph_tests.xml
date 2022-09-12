@@ -29,7 +29,15 @@
         <TextView
             android:layout_width="12dp"
             android:layout_height="match_parent" />
-
+        <Button
+            android:id="@+id/pick"
+            android:layout_width="59dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+           android:background="@drawable/circle"
+            android:paddingLeft="17dp"
+            android:drawableLeft="@drawable/search"
+            />
 
     </LinearLayout>
     <com.github.mikephil.charting.charts.LineChart

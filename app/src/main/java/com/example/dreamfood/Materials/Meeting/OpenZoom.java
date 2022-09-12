@@ -1,15 +1,20 @@
 package com.example.dreamfood.Materials.Meeting;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 public class OpenZoom extends AppCompatActivity implements View.OnClickListener {
   Dialog d;
@@ -101,9 +106,10 @@ public class OpenZoom extends AppCompatActivity implements View.OnClickListener 
         d.show();
 
     }
+    DatePickerDialog.OnDateSetListener listener;
     public void createdialogDATE()
     {
-        d= new Dialog(this);
+      /*d= new Dialog(this);
         d.setContentView(R.layout.date);
 
         datePicker=(DatePicker) d.findViewById(R.id.date);
@@ -137,10 +143,43 @@ public class OpenZoom extends AppCompatActivity implements View.OnClickListener 
                 }
             }
         });
-        d.show();
+        d.show();*/
+
+        Calendar calendar=Calendar.getInstance();
+        final int year=calendar.get(Calendar.YEAR);
+        final int month=calendar.get(Calendar.MONTH);
+        final int day=calendar.get(Calendar.DAY_OF_MONTH);
+        final int hour=calendar.get(Calendar.HOUR);
+        final int minute=calendar.get(Calendar.MINUTE);
+        DatePickerDialog    datePickerDialog=new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,listener
+        ,year,month,day);
+        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        datePickerDialog.show();
+        listener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                datePickerDialog.dismiss();
+                calendar_meet=Calendar.getInstance();
+                TimePickerDialog timePickerDialog=new TimePickerDialog(OpenZoom.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+                        calendar_meet.set(year,month,dayOfMonth,hourOfDay,minute);
+                        java.util.Date d=calendar.getTime();
+                        String dTE= (String) DateFormat.format("hh:mm aa",calendar_meet);
+
+                        }
+                },12,0,false);
+
+                timePickerDialog.updateTime(calendar_meet.getTime().getHours(),calendar_meet.getTime().getMinutes());
+                timePickerDialog.show();
+
+
+                   }
+        };
 
     }
-
+   Calendar calendar_meet;
     @Override
     public void onClick(View v) {
         if(v==zoom){
@@ -169,10 +208,13 @@ public class OpenZoom extends AppCompatActivity implements View.OnClickListener 
                  m.time= Integer.valueOf(time.getText().toString());
                  m.type=subject.getText().toString();
                  m.place=location.getText().toString();
+                 m.startdate=calendar_meet.getTime();
+                 String form = String.valueOf(DateFormat.format("MM-dd-yyyy", calendar_meet)) + " " + (String) DateFormat.format("hh:mm aa", calendar_meet);
+m.format=form;
                  FirebaseDatabase database = FirebaseDatabase.getInstance();
                  DatabaseReference myRef = database.getReference("Meetings");
 
-                 myRef.child(String.valueOf(m.email)).child(m.type).setValue(m);
+                 myRef.child(String.valueOf(m.email)).child(m.type).child(String.valueOf(m.startdate.getTime())).setValue(m);
                  Toast.makeText(this, m.type, Toast.LENGTH_SHORT).show();
                  Intent intent=new Intent(this, Teacher_home.class);
                  startActivity(intent);

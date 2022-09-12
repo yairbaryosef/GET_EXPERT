@@ -45,7 +45,7 @@ import java.util.Hashtable;
 public class add_pdf extends AppCompatActivity {
     ImageView imagebrowse,imageupload,filelogo,cancelfile;
     Uri filepath;
-    String email;
+    String email,subject;
     EditText filetitle;
     Hashtable<String,Teacher> teacherHashtable=new Hashtable<String,Teacher>();
     StorageReference storageReference;
@@ -56,6 +56,7 @@ public class add_pdf extends AppCompatActivity {
         setContentView(R.layout.activity_add_pdf);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         email=getIntent().getStringExtra("email");
+        subject=getIntent().getStringExtra("subject");
         storageReference= FirebaseStorage.getInstance().getReference();
         databaseReference= FirebaseDatabase.getInstance().getReference("tests");
         DatabaseReference d= FirebaseDatabase.getInstance().getReference("teacher");
@@ -149,8 +150,9 @@ public class add_pdf extends AppCompatActivity {
         final ProgressDialog pd=new ProgressDialog(this);
         pd.setTitle("File Uploading....!!!");
         pd.show();
+        String e=getSharedPreferences("email",0).getString("email",null);
 
-        final StorageReference reference=storageReference.child("tests/"+System.currentTimeMillis()+".pdf");
+        final StorageReference reference=storageReference.child("tests/"+e+"_"+System.currentTimeMillis()+ "_"+subject+".pdf");
         reference.putFile(filepath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -209,6 +211,7 @@ public class add_pdf extends AppCompatActivity {
                                 DatabaseReference data=FirebaseDatabase.getInstance().getReference("teacher");
                                 fileinfomodel fileinfomodel=new fileinfomodel();
                                 fileinfomodel.fileurl= uri.toString();
+                                fileinfomodel.subject=subject;
                                 fileinfomodel.filename=filetitle.getText().toString();
                                 fileinfomodel.teacherEmail=getIntent().getStringExtra("student");
                                 Teacher teacher=teacherHashtable.get(email);

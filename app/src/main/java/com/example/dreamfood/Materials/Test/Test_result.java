@@ -1,10 +1,14 @@
 package com.example.dreamfood.Materials.Test;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Classes.grade;
+import com.example.dreamfood.BusinessLayer.Quiz;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.Fragments.Exam_fragment;
 import com.example.dreamfood.Fragments.Graph_fragment;
@@ -33,6 +38,7 @@ public class Test_result extends AppCompatActivity {
     FrameLayout frameLayout;
     ArrayList<String> grades;
     Student student;
+    Hashtable<String, Quiz> quizHashtable;
     Hashtable<String, grade> ListGrades;
     Strings con=new Strings();
     @Override
@@ -62,7 +68,12 @@ public class Test_result extends AppCompatActivity {
                             ListGrades.put(g.teacher+String.valueOf(i),g);
                             i++;
                         }
+                        quizHashtable=new Hashtable<>();
+                        for(Quiz q:student.quizHashtable){
+                              quizHashtable.put(q.type+" "+q.email,q);
+                        }
                         break;
+
                     }
                 }
             }
@@ -84,10 +95,12 @@ public class Test_result extends AppCompatActivity {
                 Toast.makeText(Test_result.this,"Tab "+ tabs.get(selectedIndex).getTabText()+" Selected.",Toast.LENGTH_SHORT).show();
                 Fragment selectedFragment = null;
                 if( tabs.get(selectedIndex).getTabText().equals("graphs")) {
-                    selectedFragment = new Graph_fragment(ListGrades);
+
+                    selectedFragment = new Graph_fragment(ListGrades,quizHashtable);
                 }
                 else {
                     selectedFragment = new Exam_fragment(grades,ListGrades);
+
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
 
@@ -95,5 +108,12 @@ public class Test_result extends AppCompatActivity {
         });
 
     }
+    ArrayList<grade> arrayListGrade;
+    Dialog d;
+    ArrayList<String> items,materials;
+    AutoCompleteTextView autoCompleteTextView;
+    Button graph;
+    ListView list;
+
 
 }

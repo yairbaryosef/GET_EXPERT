@@ -1,5 +1,7 @@
 package com.example.dreamfood.Materials.Quiz;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -59,12 +62,36 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
                 quiz=snapshot.getValue(Quiz.class);
                 int i=0;
                 for(OptionsQ optionsQ:quiz.Oquestions){
-                    questions.add(new question_info_for_adapter(optionsQ.Question,optionsQ.Answer,optionsQ.answers,"","option",i));
-                    i++;
+                    try{
+                        Uri uri=Uri.parse(optionsQ.getImage_url());
+                        questions.add(new question_info_for_adapter(optionsQ.Question,optionsQ.Answer,optionsQ.answers,optionsQ.getImage_url(),"option",i));
+
+                    }
+                    catch (Exception e){
+                        questions.add(new question_info_for_adapter(optionsQ.Question,optionsQ.Answer,optionsQ.answers,"","option",i));
+
+                    }
+                     i++;
                 }
                 int j=0;
                 for(Question optionsQ:quiz.questions){
-                    questions.add(new question_info_for_adapter(optionsQ.Question,optionsQ.Answer,new ArrayList<>(),"","open",j));
+                    try {
+                        Uri uri=Uri.parse(optionsQ.getImage_url());
+                          if(optionsQ.getImage_url().equals("")){
+                              questions.add(new question_info_for_adapter(optionsQ.Question, optionsQ.Answer, new ArrayList<>(), "", "open", j));
+
+                          }
+                          else{
+                              questions.add(new question_info_for_adapter(optionsQ.Question, optionsQ.Answer, new ArrayList<>(), optionsQ.getImage_url(), "open", j));
+
+                          }
+
+
+                        }
+                    catch (Exception e){
+                        questions.add(new question_info_for_adapter(optionsQ.Question, optionsQ.Answer, new ArrayList<>(), "", "open", j));
+
+                    }
                     j++;
                 }
                 Quiz_Q_Adapter quiz_q_adapter=new Quiz_Q_Adapter(quiz_list.this,questions,quiz);
@@ -93,6 +120,15 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if(v==version){
+            Gson gson=new Gson();
+            String json=gson.toJson(quiz);
+            String student_json=gson.toJson(student);
+            Intent intent=new Intent(this,Quiz_One_Question_View.class);
+            intent.putExtra("quiz",json);
+            intent.putExtra("student",student_json);
+            startActivity(intent);
+        }
          if(v==submit){
              int questions_number=questions.size();
              int grade=100;

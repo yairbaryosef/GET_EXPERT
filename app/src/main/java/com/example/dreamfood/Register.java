@@ -10,18 +10,28 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Person;
 import com.example.dreamfood.BusinessLayer.PersonController;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Register extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 Spinner spinner;
     Button register;
     TextInputEditText phone;
+    HashMap<String, String> teacherHashMap;
+    HashMap<String, String> studentHashMap;
     String[] items =  {"teacher","student"};
     AutoCompleteTextView autoCompleteTxt;
     ArrayAdapter<String> adapterItems;
@@ -29,11 +39,48 @@ Spinner spinner;
             email, password, name,city;
     PersonController personController;
     String item="";
-
-    @Override
+Strings con=new Strings();
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        initWidgets();
+        studentHashMap=new HashMap<>();
+        teacherHashMap=new HashMap<>();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(con.teacher);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
+
+                    teacherHashMap.put(dataSnapshot.getKey(), "");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+     databaseReference= FirebaseDatabase.getInstance().getReference(con.student);
+    databaseReference.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
+
+                studentHashMap.put(dataSnapshot.getKey(), "");
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
+
+}
+
+    private void initWidgets() {
         spinner=(Spinner)findViewById(R.id.spinner);
         register = (Button) findViewById(R.id.register);
         register.setOnClickListener(this);
@@ -54,23 +101,31 @@ Spinner spinner;
             }
         });
 
+
         personController = new PersonController();
     }
-   private List<Person> personList;
+
+    private List<Person> personList;
     private String it="";
     @Override
     public void onClick(View v) {
         if (v == register) {
          if(email.getText().length()>0&&name.getText().length()>0&&password.getText().length()>0&&city.getText().length()>0&&phone.getText().length()>0&&phone.getText().length()<11&&!item.equals("")) {
-             boolean a = personController.Register(email.getText().toString(), name.getText().toString(), password.getText().toString(), city.getText().toString(), phone.getText().toString(), item);
+             if (item.equals("student")&&!studentHashMap.containsKey(con.emailStart(email.getText().toString()))||item.equals("teacher")&&!teacherHashMap.containsKey(con.emailStart(email.getText().toString()))) {
 
-             Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
-             if (a) {
-                 Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-                 Intent intent = new Intent(this, MainActivity.class);
-                 startActivity(intent);
-             } else {
-                 Toast.makeText(this, "register failed", Toast.LENGTH_SHORT).show();
+                 boolean a = personController.Register(email.getText().toString(), name.getText().toString(), password.getText().toString(), city.getText().toString(), phone.getText().toString(), item);
+
+                 Toast.makeText(this, String.valueOf(a), Toast.LENGTH_SHORT).show();
+                 if (a) {
+                     Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+                     Intent intent = new Intent(this, MainActivity.class);
+                     startActivity(intent);
+                 } else {
+                     Toast.makeText(this, "register failed", Toast.LENGTH_SHORT).show();
+                 }
+             }
+             else{
+                 Toast.makeText(this, "email is already exist", Toast.LENGTH_SHORT).show();
              }
          }
          else{

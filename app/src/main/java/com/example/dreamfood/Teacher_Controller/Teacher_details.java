@@ -39,6 +39,7 @@ public class Teacher_details extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_details);
        update=findViewById(R.id.update);
+
        update.setOnClickListener(this);
        upload_details=findViewById(R.id.Upload_box);
        upload_details.setOnClickListener(this);

@@ -1,9 +1,13 @@
 package com.example.dreamfood.Materials.Quiz;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,12 +15,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dreamfood.BusinessLayer.Classes.OptionsQ;
@@ -25,12 +31,17 @@ import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Quiz;
 import com.example.dreamfood.R;
 import com.example.dreamfood.Teacher_Controller.Teacher_home;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -94,50 +105,139 @@ subjects=new ArrayList<>();
         description.setOnClickListener(this);
     }
     String getItem="";
+    Button image;
     public void createaddquestiondislog(){
         d=new Dialog(this);
         d.setContentView(R.layout.addq);
         save=(Button)d.findViewById(R.id.save);
+        image=(Button)d.findViewById(R.id.add_picture);
         sw=(Switch) d.findViewById(R.id.switch1);
         qe=(EditText) d.findViewById(R.id.que);
         answer=(EditText) d.findViewById(R.id.ans);
         TV=(TextView)d.findViewById(R.id.tv);
         save.setOnClickListener(this);
+        image.setOnClickListener(this);
         sw.setOnCheckedChangeListener(this);
+        d.show();
+    }
+    String filename="";
+    public void processupload(Uri filepath,String type)
+    {
+        final ProgressDialog pd=new ProgressDialog(this);
+        pd.setTitle("File Uploading....!!!");
+        pd.show();
+        StorageReference storageReference= FirebaseStorage.getInstance().getReference();
+        String email=getSharedPreferences("email",0).getString("email",null);
+        final StorageReference reference=storageReference.child("image/"+subject.getText().toString()+"/"+email+"/"+System.currentTimeMillis()+".png");
+        reference.putFile(filepath)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                if(type.equals("Open")) {
+                                    filename = uri.toString();
+                                    q.setImage_url(uri.toString());
+                                    pd.dismiss();
+                                }
+                                else{
+                                    filename = uri.toString();
+                                    op.setImage_url(uri.toString());
+                                    pd.dismiss();
+                                }
+                            }
+
+
+                        });
+
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        float percent=(100*taskSnapshot.getBytesTransferred())/taskSnapshot.getTotalByteCount();
+                        pd.setMessage("Uploaded :"+(int)percent+"%");
+                    }
+                });
+    }
+    private static final int PICK_IM=1;
+    Uri uri;
+    boolean Is_Photo_Exsist=false;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PICK_IM&&resultCode==RESULT_OK){
+            try {
+                uri=data.getData();
+                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                add_picture.setImageBitmap(bitmap);
+                Is_Photo_Exsist=true;
+
+            }
+            catch (Exception e){
+
+            }
+        }
+    }
+
+    ImageButton add_picture;
+    public void Add_Picture_Dialog(){
+        d=new Dialog(this);
+        d.setContentView(R.layout.image_button);
+        add_picture=d.findViewById(R.id.add_picture);
+        add_picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v==add_picture){
+                    Intent gallery=new Intent();
+                    gallery.setType("image/*");
+                    gallery.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(gallery,"Select picture"),PICK_IM);
+                }
+            }
+        });
+
         d.show();
     }
 
     @Override
     public void onClick(View v) {
+        if(v==image){
+Add_Picture_Dialog();
+        }
         if(v==show){
             Intent intent=new Intent(this, Quiz_activity.class);
            startActivity(intent);
         }
         if(v==addquiz){
             try {
-                String sub=subject.getText().toString();
-                if(!sub.equals("")) {
-                    quiz.email = "a";
-                    quiz.pass = password.getText().toString();
-                    int p = Integer.valueOf(price.getText().toString());
-                    quiz.price = p;
-                    SharedPreferences sp = getSharedPreferences("email", 0);
-                    quiz.email = sp.getString("email", null);
-                   if(!subjects.contains(sub)){
-                       DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.subject);
-                       databaseReference.child(sub).setValue("");
-                   }
-                    quiz.type = subject.getText().toString();
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Quiz");
-                    reference.child(quiz.email).child(quiz.type).setValue(quiz);
-                    Toast.makeText(this, "quiz", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(this, Teacher_home.class);
-                    startActivity(intent);
-                }
-                else {
-                    Toast.makeText(this, "pick a subject", Toast.LENGTH_SHORT).show();
-                }
+
+                    String sub = subject.getText().toString();
+                    if (!sub.equals("")) {
+                        quiz.email = "a";
+                        quiz.pass = password.getText().toString();
+                        int p = Integer.valueOf(price.getText().toString());
+                        quiz.price = p;
+                        SharedPreferences sp = getSharedPreferences("email", 0);
+                        quiz.email = sp.getString("email", null);
+                        if (!subjects.contains(sub)) {
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(con.subject);
+                            databaseReference.child(sub).setValue("");
+                        }
+                        quiz.type = subject.getText().toString();
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Quiz");
+                        reference.child(quiz.email).child(quiz.type).setValue(quiz);
+                        Toast.makeText(this, "quiz", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(this, Teacher_home.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "pick a subject", Toast.LENGTH_SHORT).show();
+                    }
+
 
 
             }
@@ -154,6 +254,10 @@ subjects=new ArrayList<>();
 
                if(!a){
                    q=new Question();
+                   if(Is_Photo_Exsist) {
+                     processupload(uri,"Open");
+                     q.setImage_url(filename);
+                   }
                    q.Question=qe.getText().toString();
                    q.Answer= answer.getText().toString();
                    q.userAns="";
@@ -177,15 +281,19 @@ subjects=new ArrayList<>();
                lv.setAdapter(dataAdapter);
            }
            if(v==save2){
-              OptionsQ q=new OptionsQ();
-               q.Question=qe.getText().toString();
-               q.Answer= answer.getText().toString();
-               q.userAns="";
-               q.EmailSubject="a";
-               answe.add(q.Answer);
-               q.answers=answe;
+              op=new OptionsQ();
+               if(Is_Photo_Exsist) {
+                   processupload(uri,"Option");
+                   op.setImage_url(filename);
+               }
+               op.Question=qe.getText().toString();
+               op.Answer= answer.getText().toString();
+               op.userAns="";
+               op.EmailSubject="a";
+               answe.add(op.Answer);
+               op.answers=answe;
 
-               quiz.Oquestions.add(q);
+               quiz.Oquestions.add(op);
                d.dismiss();
                Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
            }
@@ -204,6 +312,7 @@ subjects=new ArrayList<>();
             d.show();
 
         }
+    OptionsQ op;
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (buttonView==sw){

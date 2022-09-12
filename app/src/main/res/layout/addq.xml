@@ -40,11 +40,29 @@
         android:layout_height="wrap_content"
         android:hint="enter answer"
         android:id="@+id/ans"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <TextView
+        android:layout_width="77dp"
+        android:layout_height="match_parent" />
+    <Button
+        android:layout_width="104dp"
+        android:layout_height="94dp"
+        android:id="@+id/add_picture"
+        android:layout_gravity="center"
+        android:background="@drawable/image" />
+
+    <TextView
+        android:layout_width="42dp"
+        android:layout_height="match_parent" />
     <Button
         android:layout_width="104dp"
         android:layout_height="94dp"
         android:id="@+id/save"
         android:layout_gravity="center"
         android:background="@drawable/save" />
+    </LinearLayout>
 </LinearLayout>

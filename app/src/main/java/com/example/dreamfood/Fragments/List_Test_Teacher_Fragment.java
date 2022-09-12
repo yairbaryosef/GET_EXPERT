@@ -23,10 +23,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Deal;
 import com.example.dreamfood.BusinessLayer.Classes.Deal_for_student;
+import com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter.Meetings_Adapter;
 import com.example.dreamfood.BusinessLayer.Classes.OptionsQ;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.Quiz;
+import com.example.dreamfood.BusinessLayer.Sort.MergeSort;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
 import com.example.dreamfood.BusinessLayer.Test;
@@ -75,7 +77,7 @@ OptionsQ optionsQS;
     String s;
     String getItem;
     Student student=new Student();
-
+   MergeSort mergeSort=new MergeSort();
     ArrayList<Deal> deals;
     public List_Test_Teacher_Fragment(ArrayList<Deal> deals){
        this.deals=deals;
@@ -93,6 +95,7 @@ OptionsQ optionsQS;
     Hashtable<String,Quiz> quizHashtable;
     Hashtable<String,Meeting> meetingHashtable;
     Hashtable<String,Test> testHashtable;
+    ArrayList<Meeting> Meetings;
     Student st=new Student();
     @Nullable
     @Override
@@ -104,6 +107,7 @@ OptionsQ optionsQS;
             meetingHashtable=new Hashtable<>();
             quizHashtable=new Hashtable<>();
             summaryHashtable=new Hashtable<>();
+            Meetings=new ArrayList<>();
             v = inflater.inflate(R.layout.videos_list, container, false);
             list=v.findViewById(R.id.list);
             profiles=new ArrayList<>();
@@ -162,10 +166,16 @@ OptionsQ optionsQS;
                                     profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
                                 }
                                 if (getCon.equals(constants.Meeting)) {
-                                    Meeting quiz = dataSnapshot1.getValue(Meeting.class);
-                                    meetingHashtable.put(quiz.type + " by: " + quiz.email,quiz);
-                                    profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
-                                }
+
+                                        Meeting quiz = dataSnapshot1.getValue(Meeting.class);
+                                        Date date=new Date();
+                                        date.setMinutes(date.getMinutes()+5);
+                                        if(quiz.startdate.getTime()>=date.getTime()) {
+                                            Meetings.add(quiz);
+                                            meetingHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                            profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                        }
+                                     }
                                 if (getCon.equals(constants.test)) {
                                     Test quiz = dataSnapshot1.getValue(Test.class);
                                     testHashtable.put(quiz.subject + " by: " + quiz.file.teacherEmail,quiz);
@@ -188,9 +198,23 @@ OptionsQ optionsQS;
                         }
 
                     }
-                    Profile_Adapter profile_adapter=new Profile_Adapter(getContext(),profiles);
-                    list.setAdapter(profile_adapter);
+                    if(getCon.equals(constants.Meeting)){
+                       mergeSort.Merge(Meetings);
 
+
+                        Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                        if (getContext() == null) {
+                            profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                        }
+                        list.setAdapter(profile_adapter);
+                    }
+                    else {
+                        Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), profiles);
+                        if (getContext() == null) {
+                            profile_adapter = new Profile_Adapter(getContext(), profiles);
+                        }
+                        list.setAdapter(profile_adapter);
+                    }
                 }
 
                 @Override
@@ -210,14 +234,27 @@ OptionsQ optionsQS;
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    ArrayList<Profile_Adapter.profile> array=new ArrayList<>();
-                    for (Profile_Adapter.profile adapterSubject : profiles) {
-                        if (adapterSubject.name.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
-                            array.add(adapterSubject);
+                    if(getCon.equals(constants.Meeting)){
+                        ArrayList<Meeting> array=new ArrayList<>();
+                        for (Meeting meeting : Meetings) {
+                            if ((meeting.type.toLowerCase().contains(newText.toLowerCase())|| meeting.email.toLowerCase().contains(newText.toLowerCase()))&& !meeting.equals("choose")) {
+                                array.add(meeting);
+                            }
+
                         }
+                        Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), array);
+                        list.setAdapter(profile_adapter);
                     }
-                    Profile_Adapter profile_adapter=new Profile_Adapter(getContext(),array);
-                    list.setAdapter(profile_adapter);
+                    else {
+                        ArrayList<Profile_Adapter.profile> array = new ArrayList<>();
+                        for (Profile_Adapter.profile adapterSubject : profiles) {
+                            if (adapterSubject.name.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
+                                array.add(adapterSubject);
+                            }
+                        }
+                        Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), array);
+                        list.setAdapter(profile_adapter);
+                    }
                     return false;
                 }
             });
@@ -231,7 +268,12 @@ OptionsQ optionsQS;
 
                     item = profiles.get(position).name;
                     if(getCon.equals(constants.summary)){
+
                         Summary summary=summaryHashtable.get(item);
+                        if(!st.summaries.contains(summary)){
+                            st.summaries.add(summary);
+                            FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(st.getEmail())).setValue(st);
+                        }
                         Intent intent=new Intent(getContext(), PDF.class);
                         intent.putExtra("url",summary.url);
 
@@ -435,11 +477,11 @@ OptionsQ optionsQS;
         date = (TextView) d.findViewById(R.id.date);
         TextView teacher = (TextView) d.findViewById(R.id.teacher);
         TextView rate = (TextView) d.findViewById(R.id.rate);
-        Test m = testHashtable.get(item);
-        subject.setText(m.subject);
-        description.setText(m.description);
-        price.setText(String.valueOf(m.price));
-        teacher.setText(m.file.teacherEmail);
+        Test t = testHashtable.get(item);
+        subject.setText(t.subject);
+        description.setText(t.description);
+        price.setText(String.valueOf(t.price));
+        teacher.setText(t.file.teacherEmail);
         rate.setText("5.0");
         Button test = (Button) d.findViewById(R.id.test);
         test.setOnClickListener(new View.OnClickListener() {
@@ -458,8 +500,9 @@ OptionsQ optionsQS;
                 if (v == join) {
                     d.dismiss();
                     Intent intent = new Intent(getContext(), add_pdf.class);
-                    intent.putExtra("email", m.file.teacherEmail);
+                    intent.putExtra("email", t.file.teacherEmail);
                     SharedPreferences sp = getContext().getSharedPreferences("email", 0);
+                    intent.putExtra("subject",t.file.subject);
                     intent.putExtra("student", sp.getString("email", null));
                     startActivity(intent);
                 }
@@ -500,4 +543,5 @@ OptionsQ optionsQS;
         }
     }
     Hashtable<String,Summary> summaryHashtable;
+
 }

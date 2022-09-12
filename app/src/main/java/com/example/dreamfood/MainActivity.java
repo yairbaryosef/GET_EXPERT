@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button entrance,ADD,pdf,draw;
     TextInputEditText email,password;
     String item;
+    String email_int,password_int,type_int;
     PersonController personController;
 
 ImageView imageView;
@@ -49,10 +50,18 @@ ImageView imageView;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWidgets();
-
-       initImage(imageView);
+     
       initSpinner();
+      try {
+           email_int= getSharedPreferences("email",0).getString("email",null);
+           password_int=getSharedPreferences("email",0).getString("password",null);
+           type_int=getSharedPreferences("email",0).getString("type",null);
 
+
+      }
+      catch (Exception e){
+
+      }
 
 
     }
@@ -138,6 +147,8 @@ ImageView imageView;
                                 SharedPreferences sp=getSharedPreferences("email",0);
                                 SharedPreferences.Editor editor=sp.edit();
                                 editor.putString("email",email.getText().toString());
+                                editor.putString("type",item);
+                                editor.putString("password",password.getText().toString());
                                 editor.commit();
 
                                 if (item.equals("student")) {
@@ -195,11 +206,12 @@ ImageView imageView;
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         item = parent.getItemAtPosition(position).toString();
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-        SharedPreferences sp=getSharedPreferences("roll",0);
-        SharedPreferences.Editor editor=sp.edit();
-        editor.putString("roll",item);
-        editor.commit();
+     //   Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        if(item.equals(type_int)) {
+            email.setText(email_int);
+            password.setText(password_int);
+            Toast.makeText(this, email_int, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

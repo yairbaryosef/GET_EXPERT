@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/classrom"
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
 
     tools:context=".MainActivity">
@@ -83,20 +84,22 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="94dp"
+        android:layout_height="69dp"
         android:layout_margin="16dp"
+
         android:hint="email"
         android:textColorHint="#aaa"
-
-        app:helperText="email"
 
         app:startIconDrawable="@drawable/ic_baseline_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
-            android:layout_width="match_parent"
+            android:background="@drawable/circle"
+android:textStyle="bold"
+
+             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"/>
+            android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -106,19 +109,20 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="94dp"
+        android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:hint="password"
-        android:textColorHint="#aaa"
-        app:counterEnabled="true"
-        app:passwordToggleEnabled="true"
-        app:helperText="password"
 
+        android:hint="password"
+
+        android:textColorHint="#aaa"
+
+        app:passwordToggleEnabled="true"
         app:startIconDrawable="@drawable/password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
+            android:background="@drawable/circle"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView

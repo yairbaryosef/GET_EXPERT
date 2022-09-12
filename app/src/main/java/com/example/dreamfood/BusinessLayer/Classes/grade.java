@@ -1,6 +1,7 @@
 package com.example.dreamfood.BusinessLayer.Classes;
 
 public class grade {
+    public String title;
     public String subject;
     public String teacher;
     public String url;

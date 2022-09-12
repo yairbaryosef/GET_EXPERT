@@ -5,34 +5,72 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Classes.fileinfomodel;
 import com.example.dreamfood.BusinessLayer.Test;
 import com.example.dreamfood.PDF_Controller.add_pdf;
 import com.example.dreamfood.R;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Open_Test extends AppCompatActivity implements View.OnClickListener {
     Button pdf,test1,description,updateBUTTON;
     EditText updateEDITTEXT,password,price,limit;
-    TextInputEditText subject;
+    AutoCompleteTextView subject;
     fileinfomodel obj=null;
     Dialog d;
     Test test=new Test();
+    ArrayList<String> subjects;
+    Strings con=new Strings();
+    String getItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_test);
-        subject=(TextInputEditText) findViewById(R.id.subject);
+        subject=(AutoCompleteTextView) findViewById(R.id.subject);
+        subjects=new ArrayList<>();
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.subject);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot sub:snapshot.getChildren()){
+                    subjects.add(sub.getKey());
+
+                }
+                ArrayAdapter<String> adapterItems=new ArrayAdapter<String>(Open_Test.this,R.layout.list_item,subjects);
+                subject.setAdapter(adapterItems);
+
+                subject.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        getItem = parent.getItemAtPosition(position).toString();
+                        Toast.makeText(getApplicationContext(),"Item: "+getItem,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         password=(EditText)findViewById(R.id.pass);
         price=(EditText)findViewById(R.id.price);
         limit=(EditText)findViewById(R.id.limit);
@@ -93,6 +131,12 @@ public class Open_Test extends AppCompatActivity implements View.OnClickListener
                       test.price=Integer.valueOf(price.getText().toString());
                       test.subject=subject.getText().toString();
                       test.pass=password.getText().toString();
+                      test.file.subject=subject.getText().toString();
+                      String sub=subject.getText().toString();
+                      if(!subjects.contains(sub)){
+                          DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.subject);
+                          databaseReference.child(sub).setValue("");
+                      }
                       DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Test");
                       reference.child(test.file.teacherEmail).child(test.file.filename + test.file.teacherEmail).setValue(test);
                       Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();

@@ -2,6 +2,8 @@ package com.example.dreamfood.BusinessLayer;
 
 import com.example.dreamfood.BusinessLayer.Classes.Deal_for_student;
 import com.example.dreamfood.BusinessLayer.Classes.grade;
+import com.example.dreamfood.BusinessLayer.summary.Summary;
+import com.example.dreamfood.Materials.Record.Recording_class;
 
 import java.util.ArrayList;
 
@@ -10,6 +12,8 @@ public class Student extends Person {
      private String student;
      public ArrayList<Meeting> meetings;
      public ArrayList<grade> grades;
+     public ArrayList<Summary> summaries;
+     public ArrayList<Recording_class> recordings;
     public ArrayList<Deal_for_student> deal_for_students;
      public ArrayList<Quiz> quizHashtable;
      public ArrayList<Test> tests;
@@ -26,5 +30,7 @@ public class Student extends Person {
          deal_for_students=new ArrayList<>();
          tests=new ArrayList<Test>();
          meetings=new ArrayList<>();
+         summaries=new ArrayList<>();
+         recordings=new ArrayList<>();
      }
 }

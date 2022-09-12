@@ -9,16 +9,18 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
+import com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter.Meetings_Adapter;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Classes.Updae_Adapter;
 import com.example.dreamfood.BusinessLayer.Meeting;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Student_details extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-Button chat,recording,update,deal,meetings,search;
+ImageButton chat,recording,update,deal,meetings,search;
 ArrayList<School> schools;
 Strings con=new Strings();
 Student student;
@@ -53,7 +55,7 @@ String key="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_details);
+        setContentView(R.layout.student_details);
 initWidgets();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(con.student);
 
@@ -91,16 +93,16 @@ initWidgets();
         });
     }
     public void initWidgets(){
-        chat=(Button) findViewById(R.id.chat);
+        chat= findViewById(R.id.chat);
         chat.setOnClickListener(this);
 
-        search=(Button) findViewById(R.id.search);
+        search= findViewById(R.id.search);
         search.setOnClickListener(this);
-        update=(Button) findViewById(R.id.upload);
+        update= findViewById(R.id.upload);
         update.setOnClickListener(this);
-        recording=(Button) findViewById(R.id.record);
+        recording= findViewById(R.id.record);
         recording.setOnClickListener(this);
-        meetings=(Button) findViewById(R.id.meeting);
+        meetings= findViewById(R.id.meeting);
         meetings.setOnClickListener(this);
         deal=findViewById(R.id.deal);
         deal.setOnClickListener(this);
@@ -174,12 +176,46 @@ initWidgets();
     public void Show_Meeting_List(){
         d=new Dialog(this);
         d.setContentView(R.layout.videos_list);
-       list=d.findViewById(R.id.list);
-       ArrayList<String> arrayList=new ArrayList<>();
-       for(Meeting m:student.meetings){
-           arrayList.add(m.type+" "+m.startdate);
-       }
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,arrayList);
+        SearchView searchView=d.findViewById(R.id.search_bar);
+        searchView.setQueryHint("type here to search");
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+              ArrayList<Meeting>  array = new ArrayList<Meeting>();
+
+                for (Meeting adapterSubject : student.meetings) {
+                    if (adapterSubject.email.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
+                        array.add(adapterSubject);
+                    }
+                }
+               Meetings_Adapter dataAdapter = new Meetings_Adapter(Student_details.this,  array);
+                list.setAdapter(dataAdapter);
+                list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                return false;
+            }
+        });
+
+
+        list=d.findViewById(R.id.list);
+
+
+        Meetings_Adapter arrayAdapter=new Meetings_Adapter(this, student.meetings);
         list.setAdapter(arrayAdapter);
         d.show();
     }

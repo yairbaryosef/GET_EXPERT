@@ -31,15 +31,16 @@
         <TextView
             android:layout_width="62dp"
             android:layout_height="match_parent" />
+
         <Button
-            android:layout_gravity="center"
-            android:layout_width="122dp"
+            android:id="@+id/student"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/circle2"
             android:text="show students page"
             android:textColor="@color/white"
-            android:id="@+id/student"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
 
 

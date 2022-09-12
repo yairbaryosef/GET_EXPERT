@@ -19,6 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Splash"
+            android:exported="false">
+
+        </activity>
+        <activity
             android:name=".Card_View"
             android:exported="false" />
         <activity
@@ -38,12 +43,8 @@
             android:exported="false" />
         <activity
             android:name=".About_US.About_us"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:exported="false">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Student_Controller.scrolling_activity"
@@ -77,6 +78,9 @@
             android:exported="false" />
         <activity
             android:name=".Materials.Chat.Chat_student"
+            android:exported="false" />
+        <activity
+            android:name=".Materials.Quiz.Quiz_One_Question_View"
             android:exported="false" />
         <activity
             android:name=".Materials.Test.Test_result"

@@ -2,6 +2,7 @@ package com.example.dreamfood.Student_Controller;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,12 +40,19 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scrolling_student);
+
         email=getSharedPreferences("email",0).getString("email",null);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(constants.student).child(email);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 student=snapshot.getValue(Student.class);
+                Gson gson=new Gson();
+                String st_json=gson.toJson(student);
+                SharedPreferences sp=getSharedPreferences(constants.student,0);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString(constants.student,st_json);
+                editor.commit();
             }
 
             @Override

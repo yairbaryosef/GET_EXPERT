@@ -24,7 +24,7 @@
         />
 
     <de.hdodenhof.circleimageview.CircleImageView
-
+      android:background="@drawable/profile"
         android:id="@+id/textView"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -65,21 +65,6 @@
             android:layout_gravity="center"
             android:background="@drawable/circle2"
             android:text="add "
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="52dp" />
-
-        <Button
-            android:id="@+id/course"
-            android:layout_width="225dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:background="@drawable/circle2"
-            android:text="add course"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:textStyle="bold" />

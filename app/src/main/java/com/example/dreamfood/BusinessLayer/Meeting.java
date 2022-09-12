@@ -1,8 +1,5 @@
 package com.example.dreamfood.BusinessLayer;
 
-import android.net.Uri;
-
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,7 +15,7 @@ public String email;
     public String description;
    public Date startdate;
     public int time;
-
+ public String format;
     public String type;
     public double price;
     public String place;
@@ -46,6 +43,7 @@ public String email;
         startdate=new Date();
         time=0;
         type="";
+
         price=0;
         place="";
         limitStudents=0;
