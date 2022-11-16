@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
     tools:context=".Materials.Meeting.OpenZoom">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#FBC02D"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="58dp" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
-    <TextView
-        android:layout_width="293dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:background="@drawable/circle2"
-        android:gravity="center"
-        android:text="open meeting"
-        android:textSize="40dp" />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
 
-    <Button
-        android:layout_width="75dp"
-        android:id="@+id/zoom"
-        android:layout_height="75dp"
-        android:layout_gravity="center"
-        android:background="@drawable/zoom"/>
+       <LinearLayout
+           android:layout_width="248dp"
+           android:layout_height="100dp"
+           android:layout_gravity="center"
+
+           android:orientation="horizontal">
+
+           <com.airbnb.lottie.LottieAnimationView
+               android:layout_width="89dp"
+               android:id="@+id/lottie"
+               android:layout_height="match_parent"
+               app:lottie_rawRes="@raw/meeting_open_anim" />
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:gravity="center"
+               android:text="Meeting"
+               android:textColor="@color/colorAccent"
+               android:textSize="30dp"
+               android:textStyle="bold"/>
+
+       </LinearLayout>
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="17dp" />
+
+
     <EditText
         android:id="@+id/id"
         android:layout_width="match_parent"
@@ -54,11 +65,23 @@
         android:hint="link" />
 
 
-    <EditText
-        android:id="@+id/subject"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="subject" />
+        android:layout_margin="16dp"
+        android:textColorHint="#000000"
+
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -126,4 +149,5 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="30dp" />
-</LinearLayout>
+   </LinearLayout>
+</ScrollView>

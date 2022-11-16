@@ -1,23 +1,18 @@
 package com.example.dreamfood.PDF_Controller;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Canvas;
+import android.app.DownloadManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.example.dreamfood.BusinessLayer.Test;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.dreamfood.R;
 import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.listener.OnDrawListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -27,8 +22,8 @@ import java.net.URL;
 public class PDF extends AppCompatActivity implements View.OnClickListener {
 PDFView pdf;
 
-Button back;
-
+Button downloud;
+String URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +31,20 @@ Button back;
 
         pdf=(PDFView) findViewById(R.id.pdfView);
         String url=getIntent().getStringExtra("url");
+        URL=url;
+        downloud=findViewById(R.id.download);
+        downloud.setOnClickListener(this);
         new Retrieve().execute(url);
     }
 
     @Override
     public void onClick(View v) {
-        if(v==back){
-            finish();
+        if(v==downloud){
+
+           createMyPDF();
         }
     }
-
+   public InputStream input;
     class Retrieve extends AsyncTask<String,Void, InputStream>{
         @Override
         protected InputStream doInBackground(String... strings) {
@@ -60,6 +59,7 @@ Button back;
             catch (Exception e){
                 return  null;
             }
+            input=inputStream;
             return inputStream;
         }
 
@@ -67,5 +67,19 @@ Button back;
         protected void onPostExecute(InputStream inputStream) {
             pdf.fromStream(inputStream).load();
         }
+
+    }
+    public void createMyPDF(){
+        DownloadManager.Request request=new DownloadManager.Request(Uri.parse(URL));
+        request.setTitle(URL);
+        request.setMimeType("application/pdf");
+        request.allowScanningByMediaScanner();
+        request.setAllowedOverMetered(true);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,URL);
+        DownloadManager downloadManager= (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        downloadManager.enqueue(request);
+        Toast.makeText(this, "in", Toast.LENGTH_SHORT).show();
+
     }
 }

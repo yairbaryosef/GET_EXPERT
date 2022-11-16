@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +44,7 @@ Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_quiz_one_question_view);
         gson=new Gson();
         String quiz_json=getIntent().getStringExtra("quiz");
@@ -150,10 +150,10 @@ optionsQ=arrayList;
 
 
         }
-        ImageButton add_picture;
+        ImageView add_picture;
         public void Add_Picture_Dialog(String url){
             d=new Dialog(getContext());
-            d.setContentView(R.layout.image_button);
+            d.setContentView(R.layout.image_view);
             add_picture=d.findViewById(R.id.add_picture);
             Picasso.get().load(Uri.parse(url)).into(add_picture);
             d.show();
@@ -190,8 +190,10 @@ optionsQ=arrayList;
                         int index = quiz.Oquestions.indexOf(optionsQ);
                         if ((index + 1) >= quiz.Oquestions.size()) {
                             Toast.makeText(Quiz_One_Question_View.this, "there is no next question", Toast.LENGTH_SHORT).show();
+
                         } else {
                             One_Option_Question_Dialog(quiz.Oquestions.get(index + 1));
+
                         }
                     }
                 }

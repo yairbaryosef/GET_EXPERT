@@ -9,9 +9,9 @@
     tools:context=".Materials.Quiz.Quiz_One_Question_View">
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/quiz"
+        android:layout_width="195dp"
         android:layout_height="55dp"
-       android:id="@+id/quiz"
         android:background="@color/Maroon"
         android:gravity="center"
         android:text="submit"

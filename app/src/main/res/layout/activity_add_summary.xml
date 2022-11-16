@@ -9,69 +9,105 @@
     tools:context=".Materials.summary.Add_summary">
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/toolbarofspecificchat"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="0dp"
-        android:background="#075e54"
-        android:orientation="horizontal">
-
-
-        <Button
-            android:id="@+id/back"
-            android:layout_width="59dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-
-            android:background="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/colorPrimaryDark"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-        <Button
-            android:id="@+id/save"
-            android:layout_width="59dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-
-            android:background="@drawable/save"
-            app:tint="@color/colorPrimaryDark"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="213dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            android:text="summary"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-
-            android:textStyle="bold"
-            app:tint="@color/colorPrimaryDark" />
-        <Button
-            android:layout_width="match_parent"
-            android:background="@drawable/pdf"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_file"/>
-
-
-
-    </LinearLayout>
-    <ListView
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list"/>
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add coin"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="61dp"
+                android:layout_height="43dp"
+
+                android:background="@drawable/upload_file" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="add file (pdf)"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:textStyle="bold"
+                android:id="@+id/add_file"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:layout_margin="16dp"
+            android:hint="name"
+            android:textColorHint="#aaa"
+            app:counterEnabled="true"
+
+            app:helperText="String"
+
+            app:startIconDrawable="@drawable/ic_baseline_email_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="94dp"
+            android:layout_margin="16dp"
+            android:hint="price"
+            android:textColorHint="#aaa"
+            app:counterEnabled="true"
+
+            app:helperText="$ per month"
+
+            app:startIconDrawable="@drawable/money">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save"
+            android:id="@+id/save"
+            android:background="@drawable/circle_purple"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
     </LinearLayout>
 </ScrollView>

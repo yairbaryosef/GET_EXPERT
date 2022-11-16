@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Dream Food</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="spinner_title">spinnertitle</string>
     <string name="spinner_title2">spinnertitle2</string>
     <string name="spinner_title3">spinnertitle3</string>

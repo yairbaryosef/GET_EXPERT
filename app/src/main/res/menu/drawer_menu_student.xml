@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+        <item
+            android:id="@+id/chat"
+            android:title="chat"
+            android:icon="@drawable/chat"/>
+    <item
+        android:id="@+id/my_docs"
+        android:title="details"
+        android:icon="@drawable/student_card"/>
+    <item
+        android:id="@+id/rating"
+        android:title="rating"
+        android:icon="@drawable/ic_baseline_star_rate_24"/>
+    <item
+        android:id="@+id/follow"
+        android:title="follow"
+        android:icon="@drawable/follower"/>
+    <item
+        android:id="@+id/coins"
+        android:title="get coin"
+        android:icon="@drawable/coin"/>
+
+    <item android:title="result"
+        >
+        <menu>
+            <item
+                android:id="@+id/quiz"
+                android:title="quiz"
+                android:icon="@drawable/quiz"/>
+            <item
+                android:id="@+id/test"
+                android:title="test"
+                android:icon="@drawable/test_icon"/>
+
+        </menu>
+    </item>
+</menu>

@@ -82,7 +82,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="57dp"
+            android:layout_width="140dp"
             android:layout_height="match_parent" />
 
         <Button
@@ -95,16 +95,6 @@
         <TextView
             android:layout_width="38dp"
             android:layout_height="match_parent" />
-
-        <TextView
-            android:layout_width="38dp"
-            android:layout_height="match_parent" />
-        <Button
-            android:id="@+id/Q"
-            android:layout_width="97dp"
-            android:layout_height="97dp"
-            android:layout_gravity="center"
-            android:background="@drawable/add_question" />
 
         <TextView
             android:layout_width="38dp"
@@ -135,7 +125,8 @@
 
 
 
-    <TextView
+
+        <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

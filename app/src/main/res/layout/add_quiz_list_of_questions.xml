@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="88dp"
+            android:id="@+id/image"
+            android:background="@drawable/add_question"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:background="@color/white"
+            android:id="@+id/question"
+            android:layout_width="221dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+           android:textAllCaps="false"
+            android:layout_height="match_parent"
+            android:text="question: Add question first"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/answer"
+            android:id="@+id/answer"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:id="@+id/text3"
+            android:textColor="@color/white"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_purple"
+            android:text="update"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:id="@+id/delete"
+            android:background="@drawable/circle3"
+            android:text="delete"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

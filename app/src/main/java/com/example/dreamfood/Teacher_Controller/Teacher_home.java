@@ -12,26 +12,36 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
+import com.example.dreamfood.List_Activity_With_Search;
 import com.example.dreamfood.Materials.Chat.OpenChat;
 import com.example.dreamfood.Materials.Meeting.OpenZoom;
-import com.example.dreamfood.Materials.Quiz.Open_Quiz;
+import com.example.dreamfood.Materials.Quiz.Add_Quiz;
 import com.example.dreamfood.Materials.Record.Recording_class;
 import com.example.dreamfood.Materials.Record.Recordings;
 import com.example.dreamfood.Materials.Test.Open_Test;
+import com.example.dreamfood.Materials.summary.Add_summary;
 import com.example.dreamfood.Message;
-import com.example.dreamfood.PDF_Controller.add_pdf;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Teacher_home extends AppCompatActivity implements View.OnClickListener {
 ImageButton open,quiz,chat,test,record,summary;
+String type="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
         open= findViewById(R.id.openMeet);
         open.setOnClickListener(this);
+        try {
+
+            type=getIntent().getStringExtra("type");
+
+        }
+        catch (Exception e){
+
+        }
         quiz= findViewById(R.id.quizz);
         quiz.setOnClickListener(this);
         chat= findViewById(R.id.chat);
@@ -39,7 +49,7 @@ ImageButton open,quiz,chat,test,record,summary;
         test= findViewById(R.id.test);
         test.setOnClickListener(this);
         record=findViewById(R.id.record);
-        record.setOnClickListener(this);
+       // record.setOnClickListener(this);
         summary=findViewById(R.id.summary);
         summary.setOnClickListener(this);
     }
@@ -60,48 +70,83 @@ ImageButton open,quiz,chat,test,record,summary;
     @Override
     public void onClick(View v) {
         if(v==summary){
-            Intent intent=new Intent(this, add_pdf.class);
-            intent.putExtra("email","summary");
-            startActivity(intent);
+            if(type.equals("delete")){
+                Intent intent = new Intent(this, List_Activity_With_Search.class);
+                intent.putExtra("item", con.summary);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(this, Add_summary.class);
+                intent.putExtra("email", "summary");
+                startActivity(intent);
+            }
         }
         if(v==record){
-            DialogAddRecord();
+            if(type.equals("delete")){
+
+            }
+            else {
+                DialogAddRecord();
+            }
         }
         if(v==add){
-            if(!name.getText().toString().equals("")) {
-                Recording_class recording_class = new Recording_class();
-                recording_class.subject = name.getText().toString();
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(con.recording);
-                reference.child(getSharedPreferences("email", 0).getString("email", null)).child(name.getText().toString()).setValue(recording_class);
-                Intent intent = new Intent(this, Recordings.class);
-                intent.putExtra("subject",name.getText().toString());
-                startActivity(intent);
-                Message.message(this,name.getText().toString()+"saved");
+            if(type.equals("delete")){
+
             }
-            else
-                Message.message(this,"name can't be empty ");
+            else {
+                if (!name.getText().toString().equals("")) {
+                    Recording_class recording_class = new Recording_class();
+                    recording_class.subject = name.getText().toString();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference(con.recording);
+                    reference.child(getSharedPreferences("email", 0).getString("email", null)).child(name.getText().toString()).setValue(recording_class);
+                    Intent intent = new Intent(this, Recordings.class);
+                    intent.putExtra("subject", name.getText().toString());
+                    startActivity(intent);
+                    Message.message(this, name.getText().toString() + "saved");
+                } else
+                    Message.message(this, "name can't be empty ");
+            }
         }
         if(v==test){
-            SharedPreferences sp=getSharedPreferences("pdf",0);
-            SharedPreferences.Editor editor=sp.edit();
-            editor.putString("title","");
+            if(type.equals("delete")){
 
-            editor.commit();
-            Intent intent=new Intent(this, Open_Test.class);
-            startActivity(intent);
+            }
+            else {
+                SharedPreferences sp = getSharedPreferences("pdf", 0);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("title", "");
+
+                editor.commit();
+                Intent intent = new Intent(this, Open_Test.class);
+                startActivity(intent);
+            }
         }
         if(v==chat){
-            Intent intent=new Intent(this, OpenChat.class);
-            intent.putExtra("job","student");
-            startActivity(intent);
+            if(type.equals("delete")){
+
+            }
+            else {
+                Intent intent = new Intent(this, OpenChat.class);
+                intent.putExtra("job", "student");
+                startActivity(intent);
+            }
         }
         if(v==open){
-            Intent intent=new Intent(this, OpenZoom.class);
-            startActivity(intent);
+            if(type.equals("delete")){
+
+            }
+            else {
+                Intent intent = new Intent(this, OpenZoom.class);
+                startActivity(intent);
+            }
         }
         if(v==quiz){
-            Intent intent=new Intent(this, Open_Quiz.class);
-            startActivity(intent);
+            if(type.equals("delete")){
+
+            }else {
+                Intent intent = new Intent(this, Add_Quiz.class);
+                startActivity(intent);
+            }
         }
     }
 }

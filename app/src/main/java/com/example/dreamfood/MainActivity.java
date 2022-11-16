@@ -7,23 +7,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.PersonController;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
 import com.example.dreamfood.PDF_Controller.Create_pdf;
-import com.example.dreamfood.PDF_Controller.Draw;
 import com.example.dreamfood.Student_Controller.scrolling_activity;
 import com.example.dreamfood.Student_Controller.search;
 import com.example.dreamfood.Teacher_Controller.Teacher_home;
 import com.example.dreamfood.Teacher_Controller.teacher_layout;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.maps.MapView;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,8 +43,9 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     Spinner spinner;
        MapView mapView;
-    Button entrance,ADD,pdf,draw;
-    TextInputEditText email,password;
+
+    Button entrance,ADD,pdf,google;
+    EditText email,password;
     String item;
     String email_int,password_int,type_int;
     PersonController personController;
@@ -82,21 +89,28 @@ ImageView imageView;
          entrance=(Button)findViewById(R.id.entrance);
          ADD=(Button)findViewById(R.id.register);
          ADD.setOnClickListener(this);
-         draw=(Button)findViewById(R.id.draw);
-         draw.setOnClickListener(this);
+         ADD=(Button)findViewById(R.id.register);
+         ADD.setOnClickListener(this);
+         google=(Button)findViewById(R.id.google);
+         google.setOnClickListener(this);
+
          pdf=(Button)findViewById(R.id.pdf);
          pdf.setOnClickListener(this);
-         password=(TextInputEditText) findViewById(R.id.password);
-         email=(TextInputEditText) findViewById(R.id.email);
+         password=findViewById(R.id.password);
+         email= findViewById(R.id.email);
          entrance.setOnClickListener(this);
      }
   private boolean A=false;
+    GoogleSignInOptions gso;
+    GoogleSignInClient gsc;
     @Override
     public void onClick(View v) {
-        if(v==draw){
-            Intent intent=new Intent(this, Draw.class);
-            startActivity(intent);
-        }
+       if(v==google){
+         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+           gsc= GoogleSignIn.getClient(this,gso);
+         Signin_Google();
+
+       }
         if(v==pdf){
             Intent intent=new Intent(this, Create_pdf.class);
             startActivity(intent);
@@ -144,6 +158,7 @@ ImageView imageView;
                                 }
                             }
                             if(A) {
+
                                 SharedPreferences sp=getSharedPreferences("email",0);
                                 SharedPreferences.Editor editor=sp.edit();
                                 editor.putString("email",email.getText().toString());
@@ -201,6 +216,53 @@ ImageView imageView;
 
     }
 
+    private void Signin_Google() {
+        Intent intent=gsc.getSignInIntent();
+        startActivityForResult(intent,123);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==123){
+            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+            try{
+
+               // Home();
+            }
+            catch (Exception e){
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+Strings con=new Strings();
+    private void Home() {
+       // finish();
+
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(item);
+        try {
+
+        Intent intent=new Intent(this,Google_Signin_Activity.class);
+        startActivity(intent);
+        }
+        catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+       /* if(item.equals(con.student)){
+            Student student=new Student();
+
+            student.setEmail(account.getEmail());
+            student.setPassword(account.getDisplayName());
+            databaseReference.child(con.emailStart(account.getEmail())).setValue(student);
+        }
+        else{
+            Teacher student=new Teacher();
+
+            student.setEmail(account.getEmail());
+            student.setPassword(account.getDisplayName());
+            databaseReference.child(con.emailStart(account.getEmail())).setValue(student);
+        }*/
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

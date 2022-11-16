@@ -8,19 +8,128 @@ import java.util.Hashtable;
 /* Java program for Merge Sort */
 public class MergeSort
 {
-    public Hashtable<Long,Meeting> meetingHashtable;
-    public void Merge(ArrayList<Meeting> meetings){
+    public Hashtable<Number,ArrayList<Meeting>> meetingHashtable;
+    public MergeSort(){
         meetingHashtable=new Hashtable<>();
-        long[] time=new long[meetings.size()];
-        int i=0;
-        for(Meeting meeting:meetings){
-            time[i]=meeting.startdate.getTime();
-            meetingHashtable.put(time[i],meeting);
+    }
+    public void Merge(ArrayList<Meeting> meetings,String order){
+
+        if(order.equals("Coming soon")) {
+            int j=0;
+            Hashtable<Long,String> integerStringHashtable=new Hashtable<>();
+            for(Meeting m:meetings){
+                if(!integerStringHashtable.containsKey(m.startdate.getTime())){
+                    j++;
+                    integerStringHashtable.put(m.startdate.getTime(),"");
+                }
+            }
+            long[] time = new long[j];
+            int i = 0;
+            int z=0;
+            for (Meeting meeting : meetings) {
+
+
+                if(!meetingHashtable.containsKey(meeting.startdate.getTime())) {
+
+                     time[z]=meeting.startdate.getTime();
+                    meetingHashtable.put(time[z],new ArrayList<>());
+                     z++;
+                    meetingHashtable.get(meeting.startdate.getTime()).add(meeting);
+                }
+                else{
+                    meetingHashtable.get(meeting.startdate.getTime()).add(meeting);
+                }
+
+
+
+            }
+            sort(time, 0, time.length - 1);
+            meetings = new ArrayList<>();
+            for (int t = time.length-1; t >= 0; t--) {
+                for(Meeting meeting:meetingHashtable.get(time[t])) {
+                 meetings.add(meeting);
+                }
+            }
         }
-        sort(time,0, time.length-1);
-        meetings=new ArrayList<>();
-        for(int t=0;t< time.length;t++){
-            meetings.add(meetingHashtable.get(time[t]));
+        else if(order.equals("the cheapest")){
+            double[] time = new double[meetings.size()];
+            int i = 0;
+            for (Meeting meeting : meetings) {
+                time[i] = meeting.price;
+                if(!meetingHashtable.containsKey(time[i])) {
+                    meetingHashtable.put(time[i],new ArrayList<>());
+                }
+                meetingHashtable.get(time[i]).add(meeting);
+            }
+            sort(time, 0, time.length - 1);
+            meetings = new ArrayList<>();
+            for (int t =  time.length-1; t >= 0; t--) {
+                for(Meeting meeting:meetingHashtable.get(time[i])) {
+                    meetings.add(meeting);
+                }
+            }
+        }
+    }
+    public void sort(double arr[],int l,int r){
+        if (l < r) {
+            // Find the middle point
+            int m =l+ (r-l)/2;
+
+            // Sort first and second halves
+            sort(arr, l, m);
+            sort(arr, m + 1, r);
+
+            // Merge the sorted halves
+            merge(arr, l, m, r);
+        }
+    }
+    public void merge(double arr[], int l, int m, int r)
+    {
+        // Find sizes of two subarrays to be merged
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        /* Create temp arrays */
+        double L[] = new double[n1];
+        double R[] = new double[n2];
+
+        /*Copy data to temp arrays*/
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[m + 1 + j];
+
+        /* Merge the temp arrays */
+
+        // Initial indexes of first and second subarrays
+        int i = 0, j = 0;
+
+        // Initial index of merged subarray array
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            }
+            else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
         }
     }
     public void sort(long arr[],int l,int r){

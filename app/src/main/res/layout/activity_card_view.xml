@@ -21,10 +21,14 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-android:layout_margin="20dp"
-       android:layout_below="@+id/title_view"
+        android:layout_below="@+id/title_view"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:columnCount="2"
         android:rowCount="3">
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +39,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -45,21 +49,22 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/test"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/test"
                     android:background="@drawable/test_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="test"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +75,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -88,12 +93,13 @@ android:layout_margin="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="quiz"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +110,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -114,21 +120,22 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/record"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/record"
                     android:background="@drawable/record" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="record"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,7 +146,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -149,21 +156,22 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/quizz"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/quizz"
                     android:background="@drawable/quiz" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="quiz"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -174,7 +182,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -184,21 +192,22 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/openMeet"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/openMeet"
                     android:background="@drawable/meeting" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="class"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -209,7 +218,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -219,21 +228,22 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/chat"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/chat"
                     android:background="@drawable/communications" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chat"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -244,7 +254,7 @@ android:layout_margin="20dp"
             android:layout_gravity="fill"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
-            app:cardElevation="8dp" >
+            app:cardElevation="8dp">
 
             <LinearLayout
                 android:layout_width="143dp"
@@ -254,17 +264,17 @@ android:layout_margin="20dp"
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/summary"
                     android:layout_width="103dp"
                     android:layout_height="113dp"
-                    android:id="@+id/summary"
                     android:background="@drawable/summary" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="summary"
-                    android:textSize="25dp"
                     android:textAlignment="center"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
             </LinearLayout>

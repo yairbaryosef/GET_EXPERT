@@ -1,4 +1,6 @@
 package com.example.dreamfood.BusinessLayer;
 
-public class QestionsAndAnswers {
+import com.example.dreamfood.BusinessLayer.Classes.Educational_content;
+
+public class QestionsAndAnswers extends Educational_content {
 }

@@ -54,7 +54,7 @@
             android:layout_height="100dp"
             android:layout_gravity="fill"
             android:layout_margin="10dp"
-
+            android:id="@+id/coin"
             app:cardCornerRadius="25dp"
             app:cardElevation="10dp">
 
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="search for a deal"
+                    android:text="search for a coin"
                     android:textColor="@color/colorAccent"
                     android:textSize="15dp"
                     android:textStyle="bold" />

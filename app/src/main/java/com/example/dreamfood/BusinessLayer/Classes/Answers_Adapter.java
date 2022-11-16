@@ -16,9 +16,11 @@ import java.util.ArrayList;
 
 public class Answers_Adapter extends ArrayAdapter<answers_adapter_item> {
    int i;
+   int size;
     public Answers_Adapter(@NonNull Context context, ArrayList<answers_adapter_item> arrayList) {
         super(context, R.layout.subject,R.id.text3, arrayList);
         i=1;
+        size=arrayList.size();
     }
 
 
@@ -40,8 +42,10 @@ public class Answers_Adapter extends ArrayAdapter<answers_adapter_item> {
         else{
            number.setBackgroundResource(R.color.red);
         }
-        number.setText(String.valueOf(i));
-        i++;
+        if(i<=size) {
+            number.setText(String.valueOf(i));
+            i++;
+        }
         right_answer.setText("right answer: "+ans.right_answer);
         right_answer.setTextColor(getContext().getColor(R.color.colorgreen));
         your_answer.setText("your answer: "+ans.your_answer);

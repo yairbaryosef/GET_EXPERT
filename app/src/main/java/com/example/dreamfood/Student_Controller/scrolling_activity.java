@@ -4,8 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -13,14 +14,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter.Meetings_Adapter;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
+import com.example.dreamfood.BusinessLayer.Profile.Pick_A_Teacher;
 import com.example.dreamfood.BusinessLayer.Student;
+import com.example.dreamfood.BusinessLayer.Teacher;
+import com.example.dreamfood.Fragment_Activity_default;
 import com.example.dreamfood.Get_Started_Student;
+import com.example.dreamfood.List_Activity_With_Search;
+import com.example.dreamfood.Materials.Chat.OpenChat;
 import com.example.dreamfood.Materials.Quiz.Quiz_result;
 import com.example.dreamfood.Materials.Test.Test_result;
 import com.example.dreamfood.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,17 +41,25 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class scrolling_activity extends AppCompatActivity implements View.OnClickListener {
-    Button back,my_details;
+public class scrolling_activity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+    Button back,my_details,rate,follow;
     Student student=new Student();
     Strings constants=new Strings();
     String email;
+    NavigationView navigationView;
+    private DrawerLayout drawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scrolling_student);
 
-        email=getSharedPreferences("email",0).getString("email",null);
+
+        drawer = findViewById(R.id.drawer_layout);
+     navigationView=findViewById(R.id.menu);
+     navigationView.setItemIconTintList(null);
+     navigationView.setNavigationItemSelectedListener(this);
+
+       email=getSharedPreferences("email",0).getString("email",null);
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(constants.student).child(email);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -60,15 +78,36 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
 
             }
         });
+       databaseReference= FirebaseDatabase.getInstance().getReference(constants.teacher).child("OOP");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                teacher=snapshot.getValue(Teacher.class);
+                Gson gson=new Gson();
+                String st_json=gson.toJson(teacher);
+                SharedPreferences sp=getSharedPreferences(constants.teacher,0);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putString("teach",st_json);
+                editor.commit();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         initWidgets();
     }
+
+    Teacher teacher=new Teacher();
     CalendarView calendarView;
     Button getStarted,result;
     private void initWidgets(){
+        follow=findViewById(R.id.follow);
+        follow.setOnClickListener(this);
         back=findViewById(R.id.back);
         back.setOnClickListener( this);
-        my_details=findViewById(R.id.my_details);
-        my_details.setOnClickListener( this);
+
         result=findViewById(R.id.show_result);
         result.setOnClickListener(this);
         calendarView=findViewById(R.id.calender);
@@ -77,8 +116,11 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(scrolling_activity.this, String.valueOf(dayOfMonth), Toast.LENGTH_SHORT).show();
-                Date_Dialog(new Date(year,month,dayOfMonth));
+                //Toast.makeText(scrolling_activity.this, String.valueOf(dayOfMonth), Toast.LENGTH_SHORT).show();
+                year=year-(3922-2022);
+               String date=String.valueOf( DateFormat.format("MM-dd-yyyy",new Date(year,month,dayOfMonth)));
+                Toast.makeText(scrolling_activity.this, date, Toast.LENGTH_SHORT).show();
+                Date_Dialog(date);
             }
         });
 
@@ -87,19 +129,27 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
    Dialog d;
    Button quiz,test;
    ListView list;
-    public void Date_Dialog(Date date){
+    public void Date_Dialog(String day){
         d=new Dialog(this);
         d.setContentView(R.layout.videos_list);
         list=d.findViewById(R.id.list);
-        ArrayList<String> arrayList=new ArrayList<>();
-        for(Meeting m:student.meetings){
+        ArrayList<Meeting> arrayList=new ArrayList<>();
 
-           Date date1=new Date(m.startdate.getYear(),m.startdate.getMonth(),m.startdate.getDay());
-            if(date1.getTime()==date.getTime()){
-                arrayList.add(m.type+" "+m.startdate.toString());
+        for(Meeting m:student.meetings){
+            try {
+
+             String check_date=    String.valueOf( DateFormat.format("MM-dd-yyyy",m.startdate));
+
+                if(day.equals(check_date)) {
+                    arrayList.add(m);
+                }
+
+            }
+            catch (Exception e){
+
             }
         }
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this, android.R.layout.select_dialog_item,arrayList);
+        Meetings_Adapter arrayAdapter=new Meetings_Adapter(this, arrayList,0);
         list.setAdapter(arrayAdapter);
         d.show();
     }
@@ -114,10 +164,11 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
    }
     @Override
     public void onClick(View v) {
-       if(v==my_details){
-           Intent intent=new Intent(this, Student_details.class);
-           startActivity(intent);
-       }
+        if(v==follow){
+            Intent intent=new Intent(this, Pick_A_Teacher.class);
+            startActivity(intent);
+        }
+
         if(v==test){
             Intent intent=new Intent(this, Test_result.class);
             startActivity(intent);
@@ -130,13 +181,57 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
             ResultDialog();
         }
         if(v==back){
-            finish();
+           drawer.openDrawer(GravityCompat.START);
         }
         if(v==getStarted){
             Intent intent=new Intent(this, Get_Started_Student.class);
             startActivity(intent);
         }
+
+    }
+
+    private void Create_Dialog_Rate() {
+        d=new Dialog(this);
+        d.setContentView(R.layout.rating_dialog);
+        d.show();
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if(item.getTitle().toString().equals("rating")){
+            Intent intent=new Intent(this, Fragment_Activity_default.class);
+
+            intent.putExtra("type","rating name");
+            startActivity(intent);
+        }
+       else if(item.getTitle().toString().equals("chat")){
+            Intent intent=new Intent(this, OpenChat.class);
+            intent.putExtra("job","teacher");
+            startActivity(intent);
+        }
+        else if(item.getTitle().toString().equals("details")){
+            Intent intent=new Intent(this, Student_details.class);
+            startActivity(intent);
+        }
+        else if(item.getTitle().toString().equals("get coin")){
+            Intent intent=new Intent(this, List_Activity_With_Search.class);
+            intent.putExtra("item",constants.coin);
+            startActivity(intent);
+        }
+        else if(item.getTitle().toString().equals("test")){
+            Intent intent=new Intent(this, Test_result.class);
+            startActivity(intent);
+        }
+        else if(item.getTitle().toString().equals("quiz")){
+            Intent intent=new Intent(this, Quiz_result.class);
+            startActivity(intent);
+        }
+        else if(item.getTitle().toString().equals("follow")){
+            Intent intent=new Intent(this, Pick_A_Teacher.class);
+            startActivity(intent);
+        }
+
+        return false;
+    }
 }

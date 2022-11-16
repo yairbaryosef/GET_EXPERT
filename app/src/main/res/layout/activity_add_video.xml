@@ -19,17 +19,30 @@
         android:background="@drawable/circle2"
         android:gravity="center"
         android:text="open video"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="40dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 
-    <EditText
-        android:id="@+id/subject"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="subject" />
+        android:layout_margin="16dp"
+        android:textColorHint="@color/colorPrimary"
+        android:hint="add"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:id="@+id/subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:text="select" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -95,6 +108,8 @@
         android:layout_gravity="center"
         android:background="@drawable/circle2"
         android:text="add video"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="25dp" />
 
     <TextView

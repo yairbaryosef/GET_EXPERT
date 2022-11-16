@@ -1,12 +1,13 @@
 package com.example.dreamfood.BusinessLayer;
 
+import com.example.dreamfood.BusinessLayer.Classes.Educational_content;
 import com.example.dreamfood.BusinessLayer.Classes.OptionsQ;
 import com.example.dreamfood.BusinessLayer.Classes.Question;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 
 import java.util.ArrayList;
 
-public class    Quiz {
+public class    Quiz extends Educational_content {
     public String pass;
     public ArrayList<String> teachers;
     public ArrayList<String> students;

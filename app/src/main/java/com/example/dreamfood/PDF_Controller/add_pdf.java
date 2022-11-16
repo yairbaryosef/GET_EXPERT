@@ -151,8 +151,13 @@ public class add_pdf extends AppCompatActivity {
         pd.setTitle("File Uploading....!!!");
         pd.show();
         String e=getSharedPreferences("email",0).getString("email",null);
-
-        final StorageReference reference=storageReference.child("tests/"+e+"_"+System.currentTimeMillis()+ "_"+subject+".pdf");
+        final StorageReference reference;
+    if(email.equals("summary")){
+     reference=storageReference.child("summary/"+e+"/"+ "/"+subject+".pdf");
+    }
+    else {
+         reference = storageReference.child("tests/" + e + "/" + "/" + subject + ".pdf");
+    }
         reference.putFile(filepath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -202,9 +207,12 @@ public class add_pdf extends AppCompatActivity {
                                 summary.url=uri.toString();
                                 summary.email=e;
                                 summary.name=filetitle.getText().toString();
-
+                                Teacher teacher=teacherHashtable.get(e);
+                                teacher.summaries.add(summary);
                                 DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.summary).child(e).child(summary.name);
                                 databaseReference.setValue(summary);
+                                 databaseReference=FirebaseDatabase.getInstance().getReference(constants.teacher).child(e);
+                                databaseReference.setValue(teacher);
                                 pd.dismiss();
                             }
                             else{
@@ -214,9 +222,9 @@ public class add_pdf extends AppCompatActivity {
                                 fileinfomodel.subject=subject;
                                 fileinfomodel.filename=filetitle.getText().toString();
                                 fileinfomodel.teacherEmail=getIntent().getStringExtra("student");
-                                Teacher teacher=teacherHashtable.get(email);
+                                Teacher teacher=teacherHashtable.get(e);
                                 teacher.tests.add(fileinfomodel);
-                                data.child(email).setValue(teacher);
+                                data.child(e).setValue(teacher);
                                 Intent intent=new Intent(add_pdf.this, scrolling_activity.class);
                                 startActivity(intent);
                                 Toast.makeText(add_pdf.this, "done", Toast.LENGTH_SHORT).show();

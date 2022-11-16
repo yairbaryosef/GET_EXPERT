@@ -25,6 +25,8 @@ import com.example.dreamfood.BusinessLayer.Classes.Deal;
 import com.example.dreamfood.BusinessLayer.Classes.Deal_for_student;
 import com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter.Meetings_Adapter;
 import com.example.dreamfood.BusinessLayer.Classes.OptionsQ;
+import com.example.dreamfood.BusinessLayer.Classes.Rating.Rating;
+import com.example.dreamfood.BusinessLayer.Classes.Rating.rate;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.Quiz;
@@ -36,6 +38,7 @@ import com.example.dreamfood.BusinessLayer.summary.Summary;
 import com.example.dreamfood.Materials.Chat.Profile_Adapter;
 import com.example.dreamfood.Materials.Quiz.quiz_list;
 import com.example.dreamfood.Materials.Record.Recording_class;
+import com.example.dreamfood.Materials.Record.Show_Recordings;
 import com.example.dreamfood.PDF_Controller.PDF;
 import com.example.dreamfood.PDF_Controller.add_pdf;
 import com.example.dreamfood.R;
@@ -45,6 +48,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -61,6 +65,7 @@ public class List_Test_Teacher_Fragment extends Fragment {
     String con;
     Hashtable<String,ArrayList<String>> save;
     ListView list;
+
     public List_Test_Teacher_Fragment(ArrayList<String> tests, Hashtable<String,ArrayList<String>> saved,String con){
      save =saved;
         this.tests=tests;
@@ -68,11 +73,13 @@ public class List_Test_Teacher_Fragment extends Fragment {
         s="add";
     }
 OptionsQ optionsQS;
-    public List_Test_Teacher_Fragment(OptionsQ optionsQS,String item){
-        this.optionsQS=optionsQS;
-       s="quiz";
-       getItem=item;
+    ArrayList<Rating> ratings;
+    public List_Test_Teacher_Fragment(ArrayList<Rating> ratings,int i){
+        this.ratings=ratings;
+       s="rate";
+
     }
+
     int i;
     String s;
     String getItem;
@@ -85,9 +92,25 @@ OptionsQ optionsQS;
     }
     ArrayList<Profile_Adapter.profile> profiles;
     String getCon;
-    public List_Test_Teacher_Fragment(String cons){
-
+    double change=-1;
+    public List_Test_Teacher_Fragment(String cons,double change){
+this.change=change;
         getCon=cons;
+        s="search";
+    }
+     String getEmail="";
+    public List_Test_Teacher_Fragment(String cons,String email){
+        this.change=change;
+        getCon=cons;
+        getEmail=email;
+        s="search";
+    }
+    Meeting meeting;
+    String order="";
+    public List_Test_Teacher_Fragment(String cons,String order,double change){
+this.change=change;
+        getCon=cons;
+        this.order=order;
         s="search";
     }
     String email;
@@ -95,6 +118,7 @@ OptionsQ optionsQS;
     Hashtable<String,Quiz> quizHashtable;
     Hashtable<String,Meeting> meetingHashtable;
     Hashtable<String,Test> testHashtable;
+    Hashtable<String,Recording_class> recording_classHashtable;
     ArrayList<Meeting> Meetings;
     Student st=new Student();
     @Nullable
@@ -107,10 +131,12 @@ OptionsQ optionsQS;
             meetingHashtable=new Hashtable<>();
             quizHashtable=new Hashtable<>();
             summaryHashtable=new Hashtable<>();
+            recording_classHashtable=new Hashtable<>();
             Meetings=new ArrayList<>();
             v = inflater.inflate(R.layout.videos_list, container, false);
             list=v.findViewById(R.id.list);
             profiles=new ArrayList<>();
+
             images=new Hashtable<String,String>();
            email= getContext().getSharedPreferences("email", 0).getString("email", null);
 
@@ -131,164 +157,7 @@ OptionsQ optionsQS;
 
                 }
             });
-            FirebaseDatabase.getInstance().getReference(constants.teacher).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
-                        Teacher teacher = dataSnapshot.getValue(Teacher.class);
-                        try {
-
-
-                            images.put(dataSnapshot.getKey(), teacher.profile_url);
-                        }
-                        catch (Exception e){
-                            images.put(dataSnapshot.getKey(), "");
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            FirebaseDatabase.getInstance().getReference(getCon).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
-                            try {
-
-
-                                if (getCon.equals(constants.Quiz)) {
-                                    Quiz quiz = dataSnapshot1.getValue(Quiz.class);
-                                    quizHashtable.put(quiz.type + " by: " + quiz.email,quiz);
-                                    profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
-                                }
-                                if (getCon.equals(constants.Meeting)) {
-
-                                        Meeting quiz = dataSnapshot1.getValue(Meeting.class);
-                                        Date date=new Date();
-                                        date.setMinutes(date.getMinutes()+5);
-                                        if(quiz.startdate.getTime()>=date.getTime()) {
-                                            Meetings.add(quiz);
-                                            meetingHashtable.put(quiz.type + " by: " + quiz.email, quiz);
-                                            profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
-                                        }
-                                     }
-                                if (getCon.equals(constants.test)) {
-                                    Test quiz = dataSnapshot1.getValue(Test.class);
-                                    testHashtable.put(quiz.subject + " by: " + quiz.file.teacherEmail,quiz);
-                                    profiles.add(new Profile_Adapter.profile(images.get(quiz.file.teacherEmail), quiz.subject + " by: " + quiz.file.teacherEmail));
-                                }
-                                if (getCon.equals(constants.recording)) {
-                                    Recording_class recording_class = dataSnapshot1.getValue(Recording_class.class);
-                                    profiles.add(new Profile_Adapter.profile(images.get(dataSnapshot.getKey()), recording_class.subject + " by: " + dataSnapshot.getKey()));
-                                }
-                                if(getCon.equals(constants.summary)){
-
-                                        Summary sum = dataSnapshot1.getValue(Summary.class);
-                                        profiles.add(new Profile_Adapter.profile(images.get(dataSnapshot.getKey()), sum.name + " by: " + dataSnapshot.getKey()));
-                                         summaryHashtable.put(sum.name + " by: " + dataSnapshot.getKey(),sum);
-                                }
-                            }
-                            catch (Exception e){
-
-                            }
-                        }
-
-                    }
-                    if(getCon.equals(constants.Meeting)){
-                       mergeSort.Merge(Meetings);
-
-
-                        Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), Meetings);
-                        if (getContext() == null) {
-                            profile_adapter = new Meetings_Adapter(getContext(), Meetings);
-                        }
-                        list.setAdapter(profile_adapter);
-                    }
-                    else {
-                        Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), profiles);
-                        if (getContext() == null) {
-                            profile_adapter = new Profile_Adapter(getContext(), profiles);
-                        }
-                        list.setAdapter(profile_adapter);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            SearchView searchView = (SearchView) v.findViewById(R.id.search_bar);
-            searchView.setQueryHint("type here to search");
-
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if(getCon.equals(constants.Meeting)){
-                        ArrayList<Meeting> array=new ArrayList<>();
-                        for (Meeting meeting : Meetings) {
-                            if ((meeting.type.toLowerCase().contains(newText.toLowerCase())|| meeting.email.toLowerCase().contains(newText.toLowerCase()))&& !meeting.equals("choose")) {
-                                array.add(meeting);
-                            }
-
-                        }
-                        Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), array);
-                        list.setAdapter(profile_adapter);
-                    }
-                    else {
-                        ArrayList<Profile_Adapter.profile> array = new ArrayList<>();
-                        for (Profile_Adapter.profile adapterSubject : profiles) {
-                            if (adapterSubject.name.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
-                                array.add(adapterSubject);
-                            }
-                        }
-                        Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), array);
-                        list.setAdapter(profile_adapter);
-                    }
-                    return false;
-                }
-            });
-
-
-
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
-                    item = profiles.get(position).name;
-                    if(getCon.equals(constants.summary)){
-
-                        Summary summary=summaryHashtable.get(item);
-                        if(!st.summaries.contains(summary)){
-                            st.summaries.add(summary);
-                            FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(st.getEmail())).setValue(st);
-                        }
-                        Intent intent=new Intent(getContext(), PDF.class);
-                        intent.putExtra("url",summary.url);
-
-                        startActivity(intent);
-                    }
-                    else if (testHashtable.containsKey(item)) {
-                        JoinTest();
-                    } else {
-
-
-                        createaddquestiondislogQuiz();
-                    }
-
-                }
-            });
+            Init();
         }
         else if(s.equals("quiz")){
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, optionsQS.answers);
@@ -320,6 +189,7 @@ OptionsQ optionsQS;
                 }
             });
         }
+
         else{
             DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(constants.student);
             databaseReference.addValueEventListener(new ValueEventListener() {
@@ -356,6 +226,370 @@ OptionsQ optionsQS;
         }
         return v;
     }
+
+    private void Init() {
+        InitTeacher();
+        if(!getEmail.equals("")) {
+            InitItems(getEmail);
+        }
+        else{
+            InitItems();
+        }
+        initSearch();
+
+        init_List_Listener();
+    }
+
+    private void init_List_Listener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (getCon.equals(constants.Meeting)){
+                    meeting=Meetings.get(position);
+                }
+                else
+                    item = profiles.get(position).name;
+                if(getCon.equals(constants.summary)){
+
+                    Summary summary=summaryHashtable.get(item);
+                    if(!st.summaries.contains(summary)){
+                        st.summaries.add(summary);
+                        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.student).child(email);
+                        databaseReference.setValue(st);
+                    }
+                    Intent intent=new Intent(getContext(), PDF.class);
+                    intent.putExtra("url",summary.url);
+
+                    startActivity(intent);
+                }
+                else if(getCon.equals(constants.recording)){
+                    Intent intent=new Intent(getContext(), Show_Recordings.class);
+                    Recording_class recording_class=recording_classHashtable.get(item);
+                    Gson gson=new Gson();
+                    String recording_gson= gson.toJson(recording_class);
+                    intent.putExtra("url",recording_gson);
+                    startActivity(intent);
+
+                }
+                else if (testHashtable.containsKey(item)) {
+                    JoinTest();
+                } else {
+
+
+                    createaddquestiondislogQuiz();
+                }
+
+            }
+        });
+    }
+
+
+    private void InitItems(String e){
+        FirebaseDatabase.getInstance().getReference(getCon).child(e).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for(DataSnapshot dataSnapshot1:snapshot.getChildren()) {
+                        try {
+
+
+                            if (getCon.equals(constants.Quiz)) {
+
+
+                                    Quiz quiz = dataSnapshot1.getValue(Quiz.class);
+
+
+                                        quizHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                        profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+
+                                }
+
+
+                            if (getCon.equals(constants.Meeting)) {
+                                for(DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()) {
+                                    Meeting quiz = dataSnapshot2.getValue(Meeting.class);
+
+
+                                            Date date = new Date();
+                                            date.setMinutes(date.getMinutes() + 5);
+                                            if (quiz.startdate.getTime() >= date.getTime()) {
+                                                Meetings.add(quiz);
+                                                meetingHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                                profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                            }
+
+
+                                }
+                            }
+                            if (getCon.equals(constants.test)) {
+                                Test test = dataSnapshot1.getValue(Test.class);
+
+
+
+                                        testHashtable.put(test.subject + " by: " + test.file.teacherEmail,test);
+                                        profiles.add(new Profile_Adapter.profile(images.get(test.file.teacherEmail), test.subject + " by: " + test.file.teacherEmail));
+
+
+  }
+                            if (getCon.equals(constants.recording)) {
+                                Recording_class recording_class = dataSnapshot1.getValue(Recording_class.class);
+                                recording_classHashtable.put(recording_class.subject + " by: " + getEmail,recording_class);
+                                profiles.add(new Profile_Adapter.profile(images.get(getEmail), recording_class.subject + " by: " + getEmail));
+                            }
+                            if(getCon.equals(constants.summary)){
+
+                                Summary sum = dataSnapshot1.getValue(Summary.class);
+                                profiles.add(new Profile_Adapter.profile(images.get(sum.name), sum.name));
+                                summaryHashtable.put(sum.name ,sum);
+                            }
+                        }
+                        catch (Exception e){
+
+                        }
+                    }
+
+
+                if(getCon.equals(constants.Meeting)){
+                    mergeSort.Merge(Meetings,order);
+
+
+                    Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                    if (getContext() == null) {
+                        profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                    }
+                    list.setAdapter(profile_adapter);
+                }
+                else {
+                    Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), profiles);
+                    if (getContext() == null) {
+                        profile_adapter = new Profile_Adapter(getContext(), profiles);
+                    }
+                    list.setAdapter(profile_adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+    private void InitItems() {
+        FirebaseDatabase.getInstance().getReference(getCon).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+                    for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
+                        try {
+
+
+                            if (getCon.equals(constants.Quiz)) {
+                                if(change>=0){
+
+                                    Quiz quiz = dataSnapshot1.getValue(Quiz.class);
+                                    if(quiz.price<=change) {
+                                        quizHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                        profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                    }
+                                }
+                                else {
+                                    Quiz quiz = dataSnapshot1.getValue(Quiz.class);
+                                    quizHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                    profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                }
+                            }
+                            if (getCon.equals(constants.Meeting)) {
+                                for(DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()) {
+                                    Meeting quiz = dataSnapshot2.getValue(Meeting.class);
+                                    if(change!=-1){
+                                        if(quiz.price<=change){
+                                            Date date = new Date();
+                                            date.setMinutes(date.getMinutes() + 5);
+                                            if (quiz.startdate.getTime() >= date.getTime()) {
+                                                Meetings.add(quiz);
+                                                meetingHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                                profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        Date date = new Date();
+                                        date.setMinutes(date.getMinutes() + 5);
+                                        if (quiz.startdate.getTime() >= date.getTime()) {
+                                            Meetings.add(quiz);
+                                            meetingHashtable.put(quiz.type + " by: " + quiz.email, quiz);
+                                            profiles.add(new Profile_Adapter.profile(images.get(quiz.email), quiz.type + " by: " + quiz.email));
+                                        }
+                                    }
+                                }
+                            }
+                            if (getCon.equals(constants.test)) {
+                                Test test = dataSnapshot1.getValue(Test.class);
+                                if(change!=-1){
+                                    if(test.price<=change){
+
+                                        testHashtable.put(test.subject + " by: " + test.file.teacherEmail,test);
+                                        profiles.add(new Profile_Adapter.profile(images.get(test.file.teacherEmail), test.subject + " by: " + test.file.teacherEmail));
+
+                                    }
+                                }
+
+                                testHashtable.put(test.subject + " by: " + test.file.teacherEmail,test);
+                                profiles.add(new Profile_Adapter.profile(images.get(test.file.teacherEmail), test.subject + " by: " + test.file.teacherEmail));
+                            }
+                            if (getCon.equals(constants.recording)) {
+                                Recording_class recording_class = dataSnapshot1.getValue(Recording_class.class);
+                                recording_classHashtable.put(recording_class.subject + " by: " + dataSnapshot.getKey(),recording_class);
+                                profiles.add(new Profile_Adapter.profile(images.get(dataSnapshot.getKey()), recording_class.subject + " by: " + dataSnapshot.getKey()));
+                            }
+                            if(getCon.equals(constants.summary)){
+
+                                Summary sum = dataSnapshot1.getValue(Summary.class);
+                                profiles.add(new Profile_Adapter.profile(images.get(dataSnapshot.getKey()), sum.name + " by: " + dataSnapshot.getKey()));
+                                summaryHashtable.put(sum.name + " by: " + dataSnapshot.getKey(),sum);
+                            }
+                        }
+                        catch (Exception e){
+
+                        }
+                    }
+
+                }
+                if(getCon.equals(constants.Meeting)){
+                    mergeSort.Merge(Meetings,order);
+
+
+                    Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                    if (getContext() == null) {
+                        profile_adapter = new Meetings_Adapter(getContext(), Meetings);
+                    }
+                    list.setAdapter(profile_adapter);
+                }
+                else {
+                    Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), profiles);
+                    if (getContext() == null) {
+                        profile_adapter = new Profile_Adapter(getContext(), profiles);
+                    }
+                    list.setAdapter(profile_adapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void InitTeacher() {
+        FirebaseDatabase.getInstance().getReference(constants.teacher).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    Teacher teacher = dataSnapshot.getValue(Teacher.class);
+                    try {
+
+
+                        images.put(dataSnapshot.getKey(), teacher.profile_url);
+                    }
+                    catch (Exception e){
+                        images.put(dataSnapshot.getKey(), "");
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void initSearch() {
+        SearchView searchView = (SearchView) v.findViewById(R.id.search_bar);
+        searchView.setQueryHint("type here to search");
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(getCon.equals(constants.Meeting)){
+                    ArrayList<Meeting> array=new ArrayList<>();
+                    for (Meeting meeting : Meetings) {
+                        if ((meeting.type.toLowerCase().contains(newText.toLowerCase())|| meeting.email.toLowerCase().contains(newText.toLowerCase()))&& !meeting.equals("choose")) {
+                            array.add(meeting);
+                        }
+
+                    }
+                    Meetings_Adapter profile_adapter = new Meetings_Adapter(getContext(), array);
+                    list.setAdapter(profile_adapter);
+                }
+                else {
+                    ArrayList<Profile_Adapter.profile> array = new ArrayList<>();
+                    for (Profile_Adapter.profile adapterSubject : profiles) {
+                        if (adapterSubject.name.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
+                            array.add(adapterSubject);
+                        }
+                    }
+                    Profile_Adapter profile_adapter = new Profile_Adapter(getContext(), array);
+                    list.setAdapter(profile_adapter);
+
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            if (getCon.equals(constants.Meeting)){
+                                meeting=Meetings.get(position);
+                            }
+                            else
+                                item = array.get(position).name;
+                            if(getCon.equals(constants.summary)){
+
+                                Summary summary=summaryHashtable.get(item);
+                                Toast.makeText(getContext(), "in", Toast.LENGTH_SHORT).show();
+                                    st.summaries.add(summary);
+
+                                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.student).child(email);
+                                    databaseReference.setValue(st);
+
+                                Intent intent=new Intent(getContext(), PDF.class);
+                                intent.putExtra("url",summary.url);
+
+                                startActivity(intent);
+                            }
+                            else if(getCon.equals(constants.recording)){
+                                Intent intent=new Intent(getContext(), Show_Recordings.class);
+                                Recording_class recording_class=recording_classHashtable.get(item);
+                                Gson gson=new Gson();
+                                String recording_gson= gson.toJson(recording_class);
+                                intent.putExtra("url",recording_gson);
+                                startActivity(intent);
+
+                            }
+                            else if (testHashtable.containsKey(item)) {
+                                JoinTest();
+                            } else {
+
+
+                                createaddquestiondislogQuiz();
+                            }
+
+                        }
+                    });
+                }
+                return false;
+            }
+        });
+    }
+
     String item;
     Dialog d;
     TextView deal_name,deal_cost;
@@ -430,8 +664,22 @@ OptionsQ optionsQS;
                     }
                     if (i == 0) {
                         d.dismiss();
-                        st.meetings.add(meetingHashtable.get(item));
-                        Toast.makeText(getContext(), "meeting saved", Toast.LENGTH_SHORT).show();
+
+                        st.meetings.add(meeting);
+                        Rating rating=new Rating();
+                        rating.teacher_email=meeting.email;
+                        rating.subject=meeting.type;
+                        rating.type=constants.Meeting;
+                        rate rate1=new rate("Rate Quality");
+                        rating.rates.add(rate1);
+                        if(st.ratings==null){
+                            st.ratings=new ArrayList<>();
+                        }
+                        Gson gs=new Gson();
+                        String json=gs.toJson(rate1);
+                        Toast.makeText(getContext(), json, Toast.LENGTH_SHORT).show();
+                        st.ratings.add(rating);
+                       // Toast.makeText(getContext(), "meeting saved", Toast.LENGTH_SHORT).show();
                         FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(st.getEmail())).setValue(st);
 
 
@@ -511,6 +759,9 @@ OptionsQ optionsQS;
         });
         d.show();
     }
+
+    //show the test on dialog.
+
     public void showTest() {
         d = new Dialog(getContext());
         d.setContentView(R.layout.pdf);
@@ -520,6 +771,9 @@ OptionsQ optionsQS;
         new Retrieve().execute(url);
         d.show();
     }
+
+    //convert url to pdf file
+
     public class Retrieve extends AsyncTask<String,Void, InputStream> {
         @Override
         protected InputStream doInBackground(String... strings) {

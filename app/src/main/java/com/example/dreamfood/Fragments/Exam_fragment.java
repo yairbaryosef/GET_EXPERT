@@ -15,10 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Classes.grade;
-import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -42,6 +39,7 @@ public class Exam_fragment extends Fragment {
         test=v.findViewById(R.id.test);
         grade=v.findViewById(R.id.grade);
         com=v.findViewById(R.id.comments);
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_multichoice, arrayList);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -1,5 +1,6 @@
 package com.example.dreamfood.Materials.Quiz;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,11 +38,34 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
     ListView list;
     int counter=0;
     Student student=new Student();
+    Dialog d;
+    public void Fun_Dialog(){
+        d=new Dialog(this);
+        d.setContentView(R.layout.dialog_choose_version);
+        Button button=d.findViewById(R.id.fun);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v==button){
+                    Gson gson=new Gson();
+                    String json=gson.toJson(quiz);
+                    String student_json=gson.toJson(student);
+                    Intent intent=new Intent(quiz_list.this,Fun_Quiz_Activity.class);
+                    intent.putExtra("quiz",json);
+
+                    intent.putExtra("student",student_json);
+                    startActivity(intent);
+                }
+            }
+        });
+        d.show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_list);
        initWidgets();
+
      DatabaseReference reference=FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(user));
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,6 +118,9 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
                     }
                     j++;
                 }
+                if(quiz.Oquestions.size()>0) {
+                    Fun_Dialog();
+                }
                 Quiz_Q_Adapter quiz_q_adapter=new Quiz_Q_Adapter(quiz_list.this,questions,quiz);
                 list.setAdapter(quiz_q_adapter);
             }
@@ -103,6 +130,7 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
 
             }
         });
+
 
     }
     public void initWidgets(){
@@ -126,6 +154,7 @@ public class quiz_list extends AppCompatActivity implements View.OnClickListener
             String student_json=gson.toJson(student);
             Intent intent=new Intent(this,Quiz_One_Question_View.class);
             intent.putExtra("quiz",json);
+
             intent.putExtra("student",student_json);
             startActivity(intent);
         }

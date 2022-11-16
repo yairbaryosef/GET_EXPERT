@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:layout_width="0dp"
+        android:id="@+id/text3"
+        android:layout_height="0dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="rating"
+        android:id="@+id/rating_text"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:numStars="5"
+
+android:layout_gravity="center"
+        android:stepSize="0.5" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="94dp"
+        android:layout_margin="16dp"
+        android:hint="comments"
+        android:textColorHint="#aaa"
+
+
+
+       >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comments"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+   <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:background="@drawable/circle2"
+       android:text="save"
+       android:id="@+id/save"
+       android:textStyle="bold"
+       android:textColor="@color/white"/>
+</LinearLayout>

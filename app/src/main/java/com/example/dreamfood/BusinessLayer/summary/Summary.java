@@ -1,6 +1,8 @@
 package com.example.dreamfood.BusinessLayer.summary;
 
-public class Summary {
+import com.example.dreamfood.BusinessLayer.Classes.Educational_content;
+
+public class Summary extends Educational_content {
     public String url;
     public String name;
     public double cost;

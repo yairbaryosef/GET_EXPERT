@@ -15,11 +15,18 @@ import com.example.dreamfood.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Profile_Adapter extends ArrayAdapter<Profile_Adapter.profile> {
     public static class profile{
         public String resource;
         public String name;
+        public Date date;
+        public profile(){
+            Calendar calendar=Calendar.getInstance();
+            date=calendar.getTime();
+        }
         public profile(String resource,String name){
            this.name=name;
            this.resource=resource;

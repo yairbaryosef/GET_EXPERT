@@ -28,6 +28,48 @@
                 android:text="order" />
         </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="23dp"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="98dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle"
+            android:text="No limit"
+            android:gravity="center"
+            android:id="@+id/price"/>
+
+        <TextView
+            android:layout_width="31dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/circle"
+            android:layout_height="wrap_content"
+            android:text="free"
+            android:id="@+id/free"
+            />
+        <TextView
+            android:layout_width="31dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@drawable/circle"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:id="@+id/cancel"
+            />
+
+
+    </LinearLayout>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
 <FrameLayout
     android:layout_width="match_parent"
 

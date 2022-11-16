@@ -25,16 +25,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Open_Test extends AppCompatActivity implements View.OnClickListener {
+public class  Open_Test extends AppCompatActivity implements View.OnClickListener {
     Button pdf,test1,description,updateBUTTON;
     EditText updateEDITTEXT,password,price,limit;
     AutoCompleteTextView subject;
     fileinfomodel obj=null;
     Dialog d;
+    Gson gson=new Gson();
     Test test=new Test();
     ArrayList<String> subjects;
     Strings con=new Strings();
@@ -80,6 +82,18 @@ public class Open_Test extends AppCompatActivity implements View.OnClickListener
         test1.setOnClickListener(this);
         description=(Button) findViewById(R.id.description);
         description.setOnClickListener(this);
+        try{
+            SharedPreferences preferences=getSharedPreferences("OPEN TEST",0);
+            String test_from_gson=preferences.getString("test",null);
+            Test t=gson.fromJson(test_from_gson,Test.class);
+            subject.setText(t.subject);
+            price.setText(String.valueOf(t.price));
+            limit.setText(String.valueOf(t.limit));
+            password.setText(String.valueOf(t.pass));
+        }
+        catch (Exception e){
+
+        }
         SharedPreferences sp=getSharedPreferences("pdf",0);
 
         String title=sp.getString("title",null);
@@ -109,6 +123,16 @@ public class Open_Test extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if(v==pdf){
+            test.limit=Integer.valueOf(limit.getText().toString());
+            test.price=Integer.valueOf(price.getText().toString());
+            test.subject=subject.getText().toString();
+            test.pass=password.getText().toString();
+
+            String test_gson=gson.toJson(test);
+            SharedPreferences sharedPreferences=getSharedPreferences("OPEN TEST",0);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString("test",test_gson);
+            editor.commit();
             Intent intent=new Intent(this, add_pdf.class);
             intent.putExtra("email","");
             startActivity(intent);
@@ -133,6 +157,11 @@ public class Open_Test extends AppCompatActivity implements View.OnClickListener
                       test.pass=password.getText().toString();
                       test.file.subject=subject.getText().toString();
                       String sub=subject.getText().toString();
+                      String test_gson=gson.toJson(test);
+                      SharedPreferences sharedPreferences=getSharedPreferences("OPEN TEST",0);
+                      SharedPreferences.Editor editor=sharedPreferences.edit();
+                      editor.putString("test",test_gson);
+                      editor.commit();
                       if(!subjects.contains(sub)){
                           DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.subject);
                           databaseReference.child(sub).setValue("");

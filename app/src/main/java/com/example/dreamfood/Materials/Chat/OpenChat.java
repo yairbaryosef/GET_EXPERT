@@ -35,6 +35,7 @@ Strings con=new Strings();
 Strings strings=new Strings();
 String persons="";
 boolean student;
+
 ArrayList<Profile_Adapter.profile> profiles;
 
     ArrayAdapter<String> dataAdapter;
@@ -42,9 +43,11 @@ ArrayList<Profile_Adapter.profile> profiles;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_chat);
-        init();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
        job= getIntent().getStringExtra("job");
+
+        init();
         DatabaseReference myRef=database.getReference(job);
         ArrayList<String> arrayList=new ArrayList<String>();
         myRef.addValueEventListener(new ValueEventListener() {

@@ -1,7 +1,10 @@
 package com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.os.Environment;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,19 +17,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
+import com.example.dreamfood.Dialogs.Pay_Dialog;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,7 +44,7 @@ public class Meetings_Adapter extends ArrayAdapter<Meeting> {
         super(context, R.layout.card_meeting,R.id.text3, arrayList);
         i=0;
     }
-    public Meetings_Adapter(@NonNull Context context, ArrayList<Meeting> arrayList,int i) {
+    public Meetings_Adapter(@NonNull Context context, ArrayList<Meeting> arrayList,int t) {
         super(context, R.layout.card_meeting,R.id.text3, arrayList);
         i=1;
     }
@@ -56,28 +62,11 @@ public class Meetings_Adapter extends ArrayAdapter<Meeting> {
             public void onClick(View v) {
                 if(v==cardView) {
                     if (i == 0) {
-                        Dialog d = new Dialog(getContext());
-                        d.setContentView(R.layout.pay_or_deal);
-                        LottieAnimationView lottieAnimationView, lottieAnimationView2;
-                        lottieAnimationView = d.findViewById(R.id.lottie);
-                        lottieAnimationView.setMinAndMaxProgress(0.5f, 1.0f);
-                        lottieAnimationView.playAnimation();
-                        lottieAnimationView2 = d.findViewById(R.id.lottie2);
-                        lottieAnimationView2.setMinAndMaxProgress(0.5f, 1.0f);
-                        lottieAnimationView2.playAnimation();
-                        CardView cardView1 = d.findViewById(R.id.card);
-                        cardView1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String string = getContext().getSharedPreferences(con.student, 0).getString(con.student, null);
-                                Student st = new Gson().fromJson(string, Student.class);
-                                st.meetings.add(meeting);
-                                Toast.makeText(getContext(), "meeting saved", Toast.LENGTH_SHORT).show();
-                                FirebaseDatabase.getInstance().getReference(con.student).child(con.emailStart(st.getEmail())).setValue(st);
+                        Pay_Dialog pay_dialog=new Pay_Dialog(getContext(),meeting,student);
+                    }
+                    else {
 
-                            }
-                        });
-                        d.show();
+                        createMyPDF(meeting);
                     }
                 }
                 else{
@@ -114,6 +103,11 @@ public class Meetings_Adapter extends ArrayAdapter<Meeting> {
         TextView price=convertView.findViewById(R.id.price);
         price.setText(String.valueOf(meeting.price)+"$");
 
+Gson gson=new Gson();
+        SharedPreferences sp=getContext().getSharedPreferences(constants.student,0);
+
+String st=sp.getString(constants.student,null);
+student=gson.fromJson(st,Student.class);
 
 
 
@@ -123,5 +117,43 @@ public class Meetings_Adapter extends ArrayAdapter<Meeting> {
 
 
         return super.getView(position,convertView, parent);
+    }
+    Strings constants=new Strings();
+    public void createMyPDF(Meeting meeting){
+
+        PdfDocument myPdfDocument = new PdfDocument();
+        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
+        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
+
+        Paint myPaint = new Paint();
+        String myString = "meeting subject:"+meeting.type+"\n"+" start at:"+meeting.format+"\n"+" by: "+meeting.email+"."+"\n"+"meeting link: "+meeting.link+"."+"\n"+"meeting password"+meeting.pass+".";
+        int x = 10, y=25;
+
+        for (String line:myString.split("\n")){
+            myPage.getCanvas().drawText(line, x, y, myPaint);
+            y+=myPaint.descent()-myPaint.ascent();
+        }
+
+        myPdfDocument.finishPage(myPage);
+
+        String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/"+meeting.email+" "+meeting.type+".pdf";
+
+        File myFile = new File(myFilePath);
+
+
+        try {
+            myPdfDocument.writeTo(new FileOutputStream(myFile));
+            student.meetings.remove(meeting);
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(student.getEmail()));
+            databaseReference.setValue(student);
+            Toast.makeText(getContext(), myFilePath, Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e){
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+
+        }
+
+        myPdfDocument.close();
     }
 }

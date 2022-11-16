@@ -1,8 +1,10 @@
 package com.example.dreamfood.Student_Controller;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 
 import com.example.dreamfood.BusinessLayer.Classes.Meeting_Adpter.Meetings_Adapter;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
@@ -26,7 +29,8 @@ import com.example.dreamfood.BusinessLayer.Classes.Updae_Adapter;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.School;
 import com.example.dreamfood.BusinessLayer.Student;
-import com.example.dreamfood.Get_Started_Student;
+import com.example.dreamfood.BusinessLayer.summary.Summaries_Adapter;
+import com.example.dreamfood.BusinessLayer.summary.Summary;
 import com.example.dreamfood.Materials.Chat.OpenChat;
 import com.example.dreamfood.Materials.Record.Show_Recordings;
 import com.example.dreamfood.R;
@@ -173,7 +177,7 @@ initWidgets();
     }
     Dialog d;
     ListView list;
-    public void Show_Meeting_List(){
+    public void Show_Meeting_List(String item){
         d=new Dialog(this);
         d.setContentView(R.layout.videos_list);
         SearchView searchView=d.findViewById(R.id.search_bar);
@@ -186,43 +190,73 @@ initWidgets();
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (item.equals(con.Meeting)) {
+                    ArrayList<Meeting> array = new ArrayList<Meeting>();
 
-              ArrayList<Meeting>  array = new ArrayList<Meeting>();
-
-                for (Meeting adapterSubject : student.meetings) {
-                    if (adapterSubject.email.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
-                        array.add(adapterSubject);
+                    for (Meeting adapterSubject : student.meetings) {
+                        if (adapterSubject.email.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
+                            array.add(adapterSubject);
+                        }
                     }
+                    Meetings_Adapter dataAdapter = new Meetings_Adapter(Student_details.this, array, 0);
+                    list.setAdapter(dataAdapter);
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        }
+                    });
+
                 }
-               Meetings_Adapter dataAdapter = new Meetings_Adapter(Student_details.this,  array);
-                list.setAdapter(dataAdapter);
-                list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+            else {
+                    ArrayList<Summary> array = new ArrayList<Summary>();
+
+                    for (Summary adapterSubject : student.summaries) {
+                        if (adapterSubject.email.toLowerCase().contains(newText.toLowerCase()) && !adapterSubject.equals("choose")) {
+                            array.add(adapterSubject);
+                        }
                     }
+                    Summaries_Adapter dataAdapter = new Summaries_Adapter(Student_details.this, array, 0);
+                    list.setAdapter(dataAdapter);
+                    list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                return false;
+                        }
+                    });
+                }
+            return false;
             }
+
+
         });
 
 
         list=d.findViewById(R.id.list);
 
+       if(item.equals(con.Meeting)) {
+           Meetings_Adapter arrayAdapter = new Meetings_Adapter(this, student.meetings, 0);
+           list.setAdapter(arrayAdapter);
+       }
+       else {
+           Summaries_Adapter arrayAdapter = new Summaries_Adapter(this, student.summaries, 0);
+           list.setAdapter(arrayAdapter);
+       }
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Meetings_Adapter arrayAdapter=new Meetings_Adapter(this, student.meetings);
-        list.setAdapter(arrayAdapter);
+            }
+        });
         d.show();
     }
     @Override
     public void onClick(View v) {
         if(v==meetings){
-          Show_Meeting_List();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
+            Show_Meeting_List(con.Meeting);
         }
         if(v==save){
             try {
@@ -276,8 +310,9 @@ initWidgets();
             startActivity(intent);
         }
         if(v==search){
-            Intent intent=new Intent(this, Get_Started_Student.class);
-            startActivity(intent);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
+            Show_Meeting_List(con.summary);
         }
     }
     String item="";

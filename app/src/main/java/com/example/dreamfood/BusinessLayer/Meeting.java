@@ -1,9 +1,11 @@
 package com.example.dreamfood.BusinessLayer;
 
+import com.example.dreamfood.BusinessLayer.Classes.Educational_content;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Meeting {
+public class Meeting extends Educational_content {
     public String link;
     public String ID;
     public int number;

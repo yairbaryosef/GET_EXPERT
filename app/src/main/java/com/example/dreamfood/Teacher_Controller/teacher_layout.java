@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,23 +17,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Quiz;
 import com.example.dreamfood.BusinessLayer.Teacher;
+import com.example.dreamfood.Dialogs.Teacher_Dialogs;
+import com.example.dreamfood.Fragments.init_teacher_Fragment;
+import com.example.dreamfood.Materials.Pay.Add_Coin_Activity;
 import com.example.dreamfood.R;
 import com.example.dreamfood.open_course;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -42,49 +46,63 @@ import java.io.ObjectOutputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class teacher_layout extends AppCompatActivity implements View.OnClickListener {
-Button add,course,details,sub;
+Button add,course,details,sub,delete,update;
 Strings con=new Strings();
 JSONObject jsonObject;
 CircleImageView image,profile_teacher;
-String email;
-Teacher teacher;
+String email="";
+Teacher teacher=new Teacher();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_layout);
         init();
-        jsonObject=new JSONObject();
+
         email=getSharedPreferences("email",0).getString("email",null);
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.teacher).child(email);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        initFrame();
+
+initNavigation();
+
+    }
+    public void initFrame(){
+               Fragment selectedFragment = null;
+               selectedFragment=new init_teacher_Fragment(email,teacher,profile_teacher);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+
+
+    }
+    DrawerLayout drawer;
+    NavigationView navigationView;
+
+    public void initNavigation(){
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView=findViewById(R.id.menu);
+        navigationView.setItemIconTintList(null);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                teacher=snapshot.getValue(Teacher.class);
-
-
-                try {
-                    if (!teacher.profile_url.equals("")) {
-                        Picasso.get().load(teacher.profile_url).into(profile_teacher);
-                        profile_teacher.setBackground(null);
-                    }
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getTitle().toString().equals("add coin")){
+                    Intent intent=new Intent(teacher_layout.this, Add_Coin_Activity.class);
+                    Gson gson=new Gson();
+                    intent.putExtra(con.teacher,gson.toJson(teacher));
+                    startActivity(intent);
                 }
-                catch(Exception e){
-
+                else if(item.getTitle().toString().equals("message")){
+                    Teacher_Dialogs teacher_dialogs=new Teacher_Dialogs(teacher_layout.this,teacher,email);
+                    teacher_dialogs.add_Message();
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                return false;
             }
         });
-
 
     }
     public void init(){
         add=(Button) findViewById(R.id.add);
         add.setOnClickListener(this);
-
+       update=findViewById(R.id.update);
+       update.setOnClickListener(this);
+       delete=findViewById(R.id.delete);
+       delete.setOnClickListener(this);
         sub=(Button) findViewById(R.id.sub);
         sub.setOnClickListener(this);
         profile_teacher= findViewById(R.id.textView);
@@ -168,6 +186,11 @@ Teacher teacher;
     }
     @Override
     public void onClick(View v) {
+        if(v==delete){
+            Intent intent=new Intent(this,Teacher_home.class);
+            intent.putExtra("type","delete");
+            startActivity(intent);
+        }
         if(v==save){
             processupload(uri);
             d.dismiss();
@@ -192,6 +215,7 @@ Teacher teacher;
         }
         if(v==add){
             Intent intent=new Intent(this, Teacher_home.class);
+            intent.putExtra("type","add");
             startActivity(intent);
         }
         if(v==course){

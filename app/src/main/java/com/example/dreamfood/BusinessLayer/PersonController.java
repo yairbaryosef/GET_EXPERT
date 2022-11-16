@@ -81,15 +81,14 @@ persons=new Hashtable<String,Person>();
                 DatabaseReference myRef = database.getReference(job);
 
 
-                String child=email.substring(0,email.indexOf('@'));
                 if(job.equals("student")) {
                     Student student = new Student(email,name, Password, city, phone);
-                    myRef.child(child).setValue(student);
+                    myRef.child(email).setValue(student);
                     return true;
                 }
                 else{
                     Teacher student = new Teacher(email, name,Password, city, phone);
-                    myRef.child(child).setValue(student);
+                    myRef.child(email).setValue(student);
                     return true;
                 }
             }
@@ -133,7 +132,8 @@ persons=new Hashtable<String,Person>();
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     public static boolean validate(String emailStr) {
-       return Patterns.EMAIL_ADDRESS.matcher(emailStr).matches();
+        return emailStr.matches("[a-zA-Z0-9]+");
+
 
     }
     public boolean validPhone(String phone){

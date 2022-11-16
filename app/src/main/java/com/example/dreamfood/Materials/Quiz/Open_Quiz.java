@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dreamfood.BusinessLayer.Classes.OptionsQ;
@@ -42,8 +39,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Open_Quiz extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, AdapterView.OnItemClickListener {
      Dialog d;
@@ -66,8 +66,9 @@ public class Open_Quiz extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_quiz);
-        addQ=(Button) findViewById(R.id.Q);
-        addQ.setOnClickListener(this);
+        Gson gson=new Gson();
+       String json=getIntent().getStringExtra("quiz");
+       quiz=gson.fromJson(json,Quiz.class);
 subjects=new ArrayList<>();
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.subject);
 
@@ -106,29 +107,16 @@ subjects=new ArrayList<>();
     }
     String getItem="";
     Button image;
-    public void createaddquestiondislog(){
-        d=new Dialog(this);
-        d.setContentView(R.layout.addq);
-        save=(Button)d.findViewById(R.id.save);
-        image=(Button)d.findViewById(R.id.add_picture);
-        sw=(Switch) d.findViewById(R.id.switch1);
-        qe=(EditText) d.findViewById(R.id.que);
-        answer=(EditText) d.findViewById(R.id.ans);
-        TV=(TextView)d.findViewById(R.id.tv);
-        save.setOnClickListener(this);
-        image.setOnClickListener(this);
-        sw.setOnCheckedChangeListener(this);
-        d.show();
-    }
+    int i=0;
     String filename="";
-    public void processupload(Uri filepath,String type)
+    public void processupload(Uri filepath,Question question)
     {
         final ProgressDialog pd=new ProgressDialog(this);
         pd.setTitle("File Uploading....!!!");
         pd.show();
         StorageReference storageReference= FirebaseStorage.getInstance().getReference();
         String email=getSharedPreferences("email",0).getString("email",null);
-        final StorageReference reference=storageReference.child("image/"+subject.getText().toString()+"/"+email+"/"+System.currentTimeMillis()+".png");
+        final StorageReference reference=storageReference.child("image/"+"quiz/"+email+"/"+subject.getText().toString()+"/"+System.currentTimeMillis()+".png");
         reference.putFile(filepath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -137,16 +125,13 @@ subjects=new ArrayList<>();
                         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                if(type.equals("Open")) {
-                                    filename = uri.toString();
-                                    q.setImage_url(uri.toString());
-                                    pd.dismiss();
-                                }
-                                else{
-                                    filename = uri.toString();
-                                    op.setImage_url(uri.toString());
-                                    pd.dismiss();
-                                }
+                                  question.setImage_url(uri.toString());
+
+                                pd.dismiss();
+
+
+
+
                             }
 
 
@@ -162,51 +147,12 @@ subjects=new ArrayList<>();
                     }
                 });
     }
-    private static final int PICK_IM=1;
-    Uri uri;
-    boolean Is_Photo_Exsist=false;
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PICK_IM&&resultCode==RESULT_OK){
-            try {
-                uri=data.getData();
-                Bitmap bitmap= MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-                add_picture.setImageBitmap(bitmap);
-                Is_Photo_Exsist=true;
-
-            }
-            catch (Exception e){
-
-            }
-        }
-    }
 
     ImageButton add_picture;
-    public void Add_Picture_Dialog(){
-        d=new Dialog(this);
-        d.setContentView(R.layout.image_button);
-        add_picture=d.findViewById(R.id.add_picture);
-        add_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v==add_picture){
-                    Intent gallery=new Intent();
-                    gallery.setType("image/*");
-                    gallery.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(gallery,"Select picture"),PICK_IM);
-                }
-            }
-        });
-
-        d.show();
-    }
 
     @Override
     public void onClick(View v) {
-        if(v==image){
-Add_Picture_Dialog();
-        }
+
         if(v==show){
             Intent intent=new Intent(this, Quiz_activity.class);
            startActivity(intent);
@@ -214,29 +160,38 @@ Add_Picture_Dialog();
         if(v==addquiz){
             try {
 
-
-                    String sub = subject.getText().toString();
-                    if (!sub.equals("")) {
-                        quiz.email = "a";
-                        quiz.pass = password.getText().toString();
-                        int p = Integer.valueOf(price.getText().toString());
-                        quiz.price = p;
-                        SharedPreferences sp = getSharedPreferences("email", 0);
-                        quiz.email = sp.getString("email", null);
-                        if (!subjects.contains(sub)) {
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(con.subject);
-                            databaseReference.child(sub).setValue("");
-                        }
-                        quiz.type = subject.getText().toString();
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Quiz");
-                        reference.child(quiz.email).child(quiz.type).setValue(quiz);
-                        Toast.makeText(this, "quiz", Toast.LENGTH_SHORT).show();
-
-                        Intent intent = new Intent(this, Teacher_home.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(this, "pick a subject", Toast.LENGTH_SHORT).show();
+                String sub = subject.getText().toString();
+                if (!sub.equals("")) {
+                    quiz.email = "a";
+                    quiz.pass = password.getText().toString();
+                    int p = Integer.valueOf(price.getText().toString());
+                    quiz.price = p;
+                    SharedPreferences sp = getSharedPreferences("email", 0);
+                    quiz.email = sp.getString("email", null);
+                    if (!subjects.contains(sub)) {
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(con.subject);
+                        databaseReference.child(sub).setValue("");
                     }
+                    quiz.type = subject.getText().toString();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Quiz");
+                    reference.child(quiz.email).child(quiz.type).setValue(quiz);
+                    Toast.makeText(Open_Quiz.this, "quiz", Toast.LENGTH_SHORT).show();
+                    SharedPreferences sharedPreferences=getSharedPreferences("delete",0);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    Strings con=new Strings();
+                    Date date= Calendar.getInstance().getTime();
+                    Gson gson=new Gson();
+                    String d=gson.toJson(date);
+                    editor.putString(con.Quiz+" "+quiz.email+quiz.type,d);
+
+                    Intent intent = new Intent(Open_Quiz.this, Teacher_home.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(Open_Quiz.this, "pick a subject", Toast.LENGTH_SHORT).show();
+
+
+
+                }
 
 
 
@@ -250,53 +205,8 @@ Add_Picture_Dialog();
             quiz.description=updateEDITTEXT.getText().toString();
             d.dismiss();
         }
-           if(v==save){
 
-               if(!a){
-                   q=new Question();
-                   if(Is_Photo_Exsist) {
-                     processupload(uri,"Open");
-                     q.setImage_url(filename);
-                   }
-                   q.Question=qe.getText().toString();
-                   q.Answer= answer.getText().toString();
-                   q.userAns="";
-                   q.EmailSubject="a";
-                   quiz.questions.add(q);
 
-                   Toast.makeText(this, "question saved", Toast.LENGTH_SHORT).show();
-
-               }
-               else {
-                   createanswerdislog();
-               }
-           }
-           if(v==addQ){
-               createaddquestiondislog();
-           }
-           if(v==adda){
-
-               answe.add(ans.getText().toString());
-               ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, answe);
-               lv.setAdapter(dataAdapter);
-           }
-           if(v==save2){
-              op=new OptionsQ();
-               if(Is_Photo_Exsist) {
-                   processupload(uri,"Option");
-                   op.setImage_url(filename);
-               }
-               op.Question=qe.getText().toString();
-               op.Answer= answer.getText().toString();
-               op.userAns="";
-               op.EmailSubject="a";
-               answe.add(op.Answer);
-               op.answers=answe;
-
-               quiz.Oquestions.add(op);
-               d.dismiss();
-               Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
-           }
            if(v==description){
 
            }
