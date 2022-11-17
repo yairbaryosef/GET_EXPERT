@@ -10,18 +10,14 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Person;
 import com.example.dreamfood.BusinessLayer.PersonController;
+import com.example.dreamfood.Fragments.init_teacher_Fragment;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,45 +41,22 @@ Strings con=new Strings();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initWidgets();
-        studentHashMap=new HashMap<>();
-        teacherHashMap=new HashMap<>();
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(con.teacher);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
-
-                    teacherHashMap.put(dataSnapshot.getKey(), "");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-     databaseReference= FirebaseDatabase.getInstance().getReference(con.student);
-    databaseReference.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-            for(DataSnapshot dataSnapshot:snapshot.getChildren()) {
-
-                studentHashMap.put(dataSnapshot.getKey(), "");
-            }
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    });
 
 }
+boolean isExsist=false;
+    public void initFrame(){
+        Fragment selectedFragment = null;
+        if(!item.equals("")) {
+            selectedFragment = new init_teacher_Fragment(isExsist, item);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
+        }
+    }
     private void initWidgets() {
         spinner=(Spinner)findViewById(R.id.spinner);
         register = (Button) findViewById(R.id.register);
         register.setOnClickListener(this);
+
         password =  findViewById(R.id.password);
         email = findViewById(R.id.email);
         name =  findViewById(R.id.name);
@@ -111,7 +84,7 @@ Strings con=new Strings();
     public void onClick(View v) {
         if (v == register) {
          if(email.getText().length()>0&&name.getText().length()>0&&password.getText().length()>0&&city.getText().length()>0&&phone.getText().length()>0&&phone.getText().length()<11&&!item.equals("")) {
-             if (item.equals("student")&&!studentHashMap.containsKey(con.emailStart(email.getText().toString()))||item.equals("teacher")&&!teacherHashMap.containsKey(con.emailStart(email.getText().toString()))) {
+             if (!checkEmail_Exsist()) {
 
                  boolean a = personController.Register(email.getText().toString(), name.getText().toString(), password.getText().toString(), city.getText().toString(), phone.getText().toString(), item);
 
@@ -133,6 +106,11 @@ Strings con=new Strings();
          }
 
         }
+    }
+
+    private boolean checkEmail_Exsist() {
+        initFrame();
+        return isExsist;
     }
 
     @Override

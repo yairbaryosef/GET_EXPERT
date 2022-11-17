@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
+import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,15 @@ public class init_teacher_Fragment extends Fragment {
        this.email=email;
        this.teacher=teacher;
        imageView=image;
+
+    }
+    int i=0;
+    boolean isExsist=false;
+    String person="";
+    public init_teacher_Fragment(boolean isExsist,String person){
+        i=1;
+        this.isExsist=isExsist;
+        this.person=person;
     }
     CircleImageView imageView;
     Strings con=new Strings();
@@ -36,27 +46,59 @@ public class init_teacher_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View v= inflater.inflate(R.layout.exam_details, container, false);
-        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(con.teacher).child(email);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                teacher=snapshot.getValue(Teacher.class);
-                Toast.makeText(getContext(), teacher.getEmail(), Toast.LENGTH_SHORT).show();
-                try {
+       if(i==1){
+
+           DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(person).child(email);
+           databaseReference.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   if(person.equals(con.teacher)) {
+                       teacher = snapshot.getValue(Teacher.class);
+                       if (teacher == null) {
+                           isExsist = false;
+                       } else {
+                           isExsist = true;
+                       }
+                   }
+                   else{
+                       Student student = snapshot.getValue(Student.class);
+                       if (teacher == null) {
+                           isExsist = false;
+                       } else {
+                           isExsist = true;
+                       }
+                   }
+
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
+
+               }
+           });
+       }
+       else {
+           DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(con.teacher).child(email);
+           databaseReference.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   teacher = snapshot.getValue(Teacher.class);
+                   Toast.makeText(getContext(), teacher.getEmail(), Toast.LENGTH_SHORT).show();
+                   try {
 
 
-                    Picasso.get().load(teacher.profile_url).into(imageView);
-                }
-                catch (Exception e){
+                       Picasso.get().load(teacher.profile_url).into(imageView);
+                   } catch (Exception e) {
 
-                }
-            }
+                   }
+               }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+               }
+           });
+       }
         return v;
     }
 }

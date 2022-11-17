@@ -138,6 +138,7 @@ public class Add_Quiz extends AppCompatActivity implements View.OnClickListener 
                         reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+
                                 question.setImage_url(uri.toString());
                                 i++;
                                 SharedPreferences sharedPreferences=getSharedPreferences("delete",0);
