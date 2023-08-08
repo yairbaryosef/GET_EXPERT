@@ -31,8 +31,8 @@ import com.example.dreamfood.BusinessLayer.School;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.summary.Summaries_Adapter;
 import com.example.dreamfood.BusinessLayer.summary.Summary;
-import com.example.dreamfood.Materials.Chat.OpenChat;
-import com.example.dreamfood.Materials.Record.Show_Recordings;
+import com.example.dreamfood.PresentaionLayer.Materials.Chat.OpenChat;
+import com.example.dreamfood.PresentaionLayer.Materials.Record.Show_Recordings;
 import com.example.dreamfood.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -96,6 +96,9 @@ initWidgets();
             }
         });
     }
+    /*
+    init views
+     */
     public void initWidgets(){
         chat= findViewById(R.id.chat);
         chat.setOnClickListener(this);
@@ -177,6 +180,9 @@ initWidgets();
     }
     Dialog d;
     ListView list;
+    /*
+    show meetings list
+     */
     public void Show_Meeting_List(String item){
         d=new Dialog(this);
         d.setContentView(R.layout.videos_list);

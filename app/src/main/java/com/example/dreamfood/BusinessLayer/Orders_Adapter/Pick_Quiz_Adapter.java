@@ -19,9 +19,15 @@ import java.util.Hashtable;
 import java.util.Set;
 
 public class Pick_Quiz_Adapter extends ArrayAdapter<Quiz> {
+    /*
+   constructor 1
+    */
     public Pick_Quiz_Adapter(@NonNull Context context, ArrayList<Quiz> arrayList) {
         super(context, R.layout.pick_materials,R.id.text3, arrayList);
     }
+    /*
+   constructor 2
+    */
     public Pick_Quiz_Adapter(@NonNull Context context, ArrayList<Quiz> arrayList, Set<String> keys, Hashtable<String,Quiz> quizzes) {
         super(context, R.layout.pick_materials,R.id.text3, arrayList);
         this.mat=quizzes;
@@ -29,6 +35,9 @@ public class Pick_Quiz_Adapter extends ArrayAdapter<Quiz> {
     }
    Set<String> keys;
    Hashtable<String,Quiz> mat;
+    /*
+    generate adapter item
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

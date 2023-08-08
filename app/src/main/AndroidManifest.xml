@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.dreamfood">
+    package="com.example.dreamfood" >
     <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,9 +18,23 @@
         android:label="GET EXPERT"
         android:roundIcon="@drawable/mula"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".Materials.Pay.Add_Coin_Activity"
+            android:name=".PresentaionLayer.Materials.summary.Show_summaries"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PresentaionLayer.Materials.Pay.Add_Coin_Activity"
             android:exported="false" />
         <activity
             android:name=".BusinessLayer.Profile.Teacher_Profile"
@@ -29,16 +43,16 @@
             android:name=".Google_Signin_Activity"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Show_questions.Open_Question_Fun"
+            android:name=".PresentaionLayer.Materials.Quiz.Show_questions.Open_Question_Fun"
             android:exported="false" />
         <activity
             android:name=".List_Activity_With_Search"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Add_Quiz"
+            android:name=".PresentaionLayer.Materials.Quiz.Add_Quiz"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Fun_Quiz_Activity"
+            android:name=".PresentaionLayer.Materials.Quiz.Fun_Quiz_Activity"
             android:exported="false" />
         <activity
             android:name=".Fragment_Activity_default"
@@ -50,22 +64,22 @@
             android:name=".Card_View"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Quiz_One_Question_View"
+            android:name=".PresentaionLayer.Materials.Quiz.Quiz_One_Question_View"
             android:exported="false" />
         <activity
             android:name=".Get_Started_Student"
             android:exported="false" />
         <activity
-            android:name=".Materials.summary.Add_summary"
+            android:name=".PresentaionLayer.Materials.summary.Add_summary"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.quiz_list"
+            android:name=".PresentaionLayer.Materials.Quiz.quiz_list"
             android:exported="false" />
         <activity
             android:name=".BusinessLayer.Profile.Pick_A_Teacher"
             android:exported="false" />
         <activity
-            android:name=".About_US.About_Us_Teacher_Version"
+            android:name=".Ab"
             android:exported="false" />
         <activity
             android:name=".About_US.About_us"
@@ -78,19 +92,25 @@
             android:name=".Student_Controller.Add_Deal_For_Students"
             android:exported="false" />
         <activity
-            android:name=".Google_Controller.Google_EditText"
+            android:name=".PresentaionLayer.Extend_Fitchers.Google_Controller.Google_EditText"
             android:exported="false" />
         <activity
             android:name=".Teacher_Controller.Teacher_Upload_Box"
             android:exported="false" />
         <activity
-            android:name=".Materials.Record.Show_Recordings"
+            android:name=".PresentaionLayer.Materials.Record.Show_Recordings"
             android:exported="false" />
         <activity
-            android:name=".Materials.Record.Add_Video"
+            android:name=".PresentaionLayer.Materials.Record.Add_Video"
             android:exported="false" />
         <activity
-            android:name=".Materials.Record.Recordings"
+            android:name=".PresentaionLayer.Materials.Record.Recordings"
+            android:exported="false" />
+        <activity
+            android:name=".PresentaionLayer.Materials.Record.Open_Recordings"
+            android:exported="false" />
+        <activity
+            android:name=".PresentaionLayer.Materials.Record.Add_Recording"
             android:exported="false" />
         <activity
             android:name=".Video"
@@ -102,29 +122,29 @@
             android:name=".Teacher_Controller.Subscribes_teacher"
             android:exported="false" />
         <activity
-            android:name=".Materials.Chat.Chat_student"
+            android:name=".PresentaionLayer.Materials.Chat.Chat_student"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Quiz_One_Question_View"
+            android:name=".PresentaionLayer.Materials.Quiz.Quiz_One_Question_View"
             android:exported="false"
             tools:ignore="DuplicateActivity" />
         <activity
-            android:name=".Materials.Test.Test_result"
+            android:name=".PresentaionLayer.Materials.Test.Test_result"
             android:exported="false" />
         <activity
             android:name=".Student_Controller.Student_details"
             android:exported="false" />
         <activity
-            android:name=".PDF_Controller.Check_pdf"
+            android:name=".PresentaionLayer.Extend_Fitchers.PDF_Controller.Check_pdf"
             android:exported="false" />
         <activity
-            android:name=".Materials.Meeting.Connect_to_Zoom"
+            android:name=".PresentaionLayer.Materials.Meeting.Connect_to_Zoom"
             android:exported="false" />
         <activity
-            android:name=".PDF_Controller.Create_pdf"
+            android:name=".PresentaionLayer.Extend_Fitchers.PDF_Controller.Create_pdf"
             android:exported="false" />
         <activity
-            android:name=".Materials.Chat.Chat_Meesage"
+            android:name=".PresentaionLayer.Materials.Chat.Chat_Meesage"
             android:exported="false" />
         <activity
             android:name=".Teacher_Controller.Teacher_details"
@@ -143,7 +163,7 @@
             android:exported="false"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".Google_Controller.CheckoutActivity"
+            android:name=".PresentaionLayer.Extend_Fitchers.Google_Controller.CheckoutActivity"
             android:exported="false"
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme" /> <!-- This element is required to enable Google Pay in your app. -->
@@ -152,19 +172,19 @@
             android:value="true" />
 
         <activity
-            android:name=".PDF_Controller.Draw"
+            android:name=".PresentaionLayer.Extend_Fitchers.PDF_Controller.Draw"
             android:exported="false" />
         <activity
-            android:name=".PDF_Controller.PDF"
+            android:name=".PresentaionLayer.Extend_Fitchers.PDF_Controller.PDF"
             android:exported="false" />
         <activity
-            android:name=".Materials.Test.Test_Activity"
+            android:name=".PresentaionLayer.Materials.Test.Test_Activity"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Quiz_result"
+            android:name=".PresentaionLayer.Materials.Quiz.Quiz_result"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Quiz_activity"
+            android:name=".PresentaionLayer.Materials.Quiz.Quiz_activity"
             android:exported="false" />
         <activity
             android:name=".Student_Controller.Student_home"
@@ -176,32 +196,32 @@
             android:name=".open_course"
             android:exported="false" />
         <activity
-            android:name=".Google_Controller.ADS"
+            android:name=".PresentaionLayer.Extend_Fitchers.Google_Controller.ADS"
             android:exported="false"
             android:label="@string/title_activity_ads" />
         <activity
-            android:name=".PDF_Controller.add_pdf"
+            android:name=".PresentaionLayer.Extend_Fitchers.PDF_Controller.add_pdf"
             android:exported="false" />
         <activity
-            android:name=".Materials.Test.Open_Test"
+            android:name=".PresentaionLayer.Materials.Test.Open_Test"
             android:exported="false" />
         <activity
-            android:name=".Materials.Chat.Chat_Active"
+            android:name=".PresentaionLayer.Materials.Chat.Chat_Active"
             android:exported="false" />
         <activity
-            android:name=".Materials.Chat.OpenChat"
+            android:name=".PresentaionLayer.Materials.Chat.OpenChat"
             android:exported="false" />
         <activity
             android:name=".Web"
             android:exported="false" />
         <activity
-            android:name=".Materials.Quiz.Open_Quiz"
+            android:name=".PresentaionLayer.Materials.Quiz.Open_Quiz"
             android:exported="false" />
         <activity
             android:name=".Teacher_Controller.Teacher_home"
             android:exported="false" />
         <activity
-            android:name=".Materials.Meeting.OpenZoom"
+            android:name=".PresentaionLayer.Materials.Meeting.OpenZoom"
             android:exported="false" />
         <activity
             android:name=".Student_Controller.search"
@@ -209,15 +229,6 @@
         <activity
             android:name=".Register"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

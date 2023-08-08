@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Materials.Chat.Chat_Active">
+    android:background="#4D10BA"
+    tools:context=".PresentaionLayer.Materials.Chat.Chat_Active">
 
-    <CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <com.google.android.gms.maps.MapView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="161dp"
+        android:layout_height="172dp"
+        app:srcCompat="@drawable/chat"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="343dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="chat"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="515dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

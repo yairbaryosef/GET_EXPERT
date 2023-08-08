@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bac12"
-    tools:context=".Materials.Quiz.Quiz_result">
+    tools:context=".PresentaionLayer.Materials.Quiz.Quiz_result">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="32dp"

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".PDF_Controller.PDF">
+    tools:context=".PresentaionLayer.Extend_Fitchers.PDF_Controller.PDF">
 
     <Button
         android:layout_width="58dp"

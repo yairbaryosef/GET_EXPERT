@@ -1,10 +1,12 @@
 package com.example.dreamfood.BusinessLayer.Classes;
 
+import java.util.Date;
+
 public class Messages {
 
     String message;
     String senderId;
-    long timestamp;
+    Date timestamp;
     String currenttime;
     public boolean seen;
 
@@ -13,7 +15,7 @@ public class Messages {
     }
 
 
-    public Messages(String message, String senderId, long timestamp, String currenttime) {
+    public Messages(String message, String senderId, Date timestamp, String currenttime) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
@@ -36,11 +38,11 @@ public class Messages {
         this.senderId = senderId;
     }
 
-    public long getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

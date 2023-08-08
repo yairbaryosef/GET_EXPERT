@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.Fragments.List_Test_Teacher_Fragment;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Fragments.List_Test_Teacher_Fragment;
 import com.example.dreamfood.R;
 import com.flarebit.flarebarlib.FlareBar;
 import com.flarebit.flarebarlib.Flaretab;
@@ -38,11 +39,12 @@ public class Teacher_Profile extends AppCompatActivity implements View.OnClickLi
     Strings constants=new Strings();
    Gson gson=new Gson();
    String email;
+   ListView posts;
    Teacher teacher=new Teacher();
    Student student=new Student();
    CircleImageView imageView;
    TextView bio,followers;
-   Button follow,chat;
+   Button follow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class Teacher_Profile extends AppCompatActivity implements View.OnClickLi
                 teacher=snapshot.getValue(Teacher.class);
                 initViews();
                 initFrame();
+
             }
 
             @Override
@@ -69,7 +72,9 @@ public class Teacher_Profile extends AppCompatActivity implements View.OnClickLi
 
 
     }
-
+    /*
+    init frame
+     */
     private void initFrame(){
         FlareBar bottomBar = findViewById(R.id.bottomBar);
         ArrayList<Flaretab> tabs = new ArrayList<>();
@@ -90,26 +95,28 @@ public class Teacher_Profile extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(Teacher_Profile.this,"Tab "+ tabs.get(selectedIndex).getTabText()+" Selected.",Toast.LENGTH_SHORT).show();
                Fragment selectedFragment = null;
                 if( tabs.get(selectedIndex).getTabText().equals("meeting")) {
-                    selectedFragment=new List_Test_Teacher_Fragment(constants.Meeting,con.emailStart(teacher.getEmail()));
+                    selectedFragment=new List_Test_Teacher_Fragment(constants.Meeting,teacher.getEmail());
                 }
                 else if( tabs.get(selectedIndex).getTabText().equals("quiz")){
-                    selectedFragment=new List_Test_Teacher_Fragment(constants.Quiz,con.emailStart(teacher.getEmail()));
+                    selectedFragment=new List_Test_Teacher_Fragment(constants.Quiz,teacher.getEmail());
                 }
                 else if( tabs.get(selectedIndex).getTabText().equals("exam")){
-                    selectedFragment=new List_Test_Teacher_Fragment(constants.test,con.emailStart(teacher.getEmail()));
+                    selectedFragment=new List_Test_Teacher_Fragment(constants.test,teacher.getEmail());
                 }
                 else if( tabs.get(selectedIndex).getTabText().equals("recordings")){
-                    selectedFragment=new List_Test_Teacher_Fragment(constants.recording,con.emailStart(teacher.getEmail()));
+                    selectedFragment=new List_Test_Teacher_Fragment(constants.recording,teacher.getEmail());
                 }
                 else {
-                    selectedFragment=new List_Test_Teacher_Fragment(constants.summary,con.emailStart(teacher.getEmail()));
+                    selectedFragment=new List_Test_Teacher_Fragment(constants.summary,teacher.getEmail());
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
 
             }
         });
     }
-
+    /*
+     init views
+       */
     private void initViews() {
         imageView=findViewById(R.id.profile);
         bio=findViewById(R.id.bio);
@@ -121,27 +128,36 @@ public class Teacher_Profile extends AppCompatActivity implements View.OnClickLi
         if(teacher.followers_names.contains(student.getEmail())){
             follow.setText("Unfollow");
         }
+        posts=findViewById(R.id.posts);
+        Posts_Adapter posts_adapter=new Posts_Adapter(this,teacher.messages);
+        posts.setAdapter(posts_adapter);
         follow.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v==follow){
+            /*
+            follow
+             */
             if(follow.getText().toString().equals("follow")){
                 follow.setText("Unfollow");
                 student.following.add(teacher.getEmail());
                 teacher.followers_names.add(student.getEmail());
                 teacher.followers++;
-                 FirebaseDatabase.getInstance().getReference(con.student).child(con.emailStart(student.getEmail())).setValue(student);
-                FirebaseDatabase.getInstance().getReference(con.teacher).child(con.emailStart(teacher.getEmail())).setValue(teacher);
+                 FirebaseDatabase.getInstance().getReference(con.student).child(student.getEmail()).setValue(student);
+                FirebaseDatabase.getInstance().getReference(con.teacher).child(teacher.getEmail()).setValue(teacher);
             }
+              /*
+             unfollow
+             */
             else {
                 follow.setText("follow");
                 student.following.remove(teacher.getEmail());
                 teacher.followers_names.remove(student.getEmail());
                 teacher.followers--;
-                FirebaseDatabase.getInstance().getReference(con.student).child(con.emailStart(student.getEmail())).setValue(student);
-                FirebaseDatabase.getInstance().getReference(con.teacher).child(con.emailStart(teacher.getEmail())).setValue(teacher);
+                FirebaseDatabase.getInstance().getReference(con.student).child(student.getEmail()).setValue(student);
+                FirebaseDatabase.getInstance().getReference(con.teacher).child(teacher.getEmail()).setValue(teacher);
 
             }
         }

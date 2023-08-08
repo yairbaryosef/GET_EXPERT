@@ -23,25 +23,30 @@ import androidx.fragment.app.Fragment;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Quiz;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.Dialogs.Teacher_Dialogs;
-import com.example.dreamfood.Fragments.init_teacher_Fragment;
-import com.example.dreamfood.Materials.Pay.Add_Coin_Activity;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Dialogs.Teacher_Dialogs;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Fragments.init_teacher_Fragment;
+import com.example.dreamfood.PresentaionLayer.Materials.Pay.Add_Coin_Activity;
 import com.example.dreamfood.R;
 import com.example.dreamfood.open_course;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,29 +56,60 @@ Strings con=new Strings();
 JSONObject jsonObject;
 CircleImageView image,profile_teacher;
 String email="";
+FirebaseDatabase firebaseDatabase;
 Teacher teacher=new Teacher();
+    private ArrayList<String> subjects;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_layout);
         init();
+        email=getIntent().getStringExtra("email");
 
-        email=getSharedPreferences("email",0).getString("email",null);
-        initFrame();
 
-initNavigation();
+        initNavigation();
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(con.teacher).child(email);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                teacher=snapshot.getValue(Teacher.class);
+                Toast.makeText(teacher_layout.this, teacher.getEmail(), Toast.LENGTH_SHORT).show();
+                 Picasso.get().load(teacher.profile_url).into(profile_teacher);
+                 Gson gson=new Gson();
+                 String teacher_json=gson.toJson(teacher);
+                 SharedPreferences sharedPreferences=getSharedPreferences(con.teacher,0);
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.putString(con.teacher,teacher_json);
+              //  Toast.makeText(teacher_layout.this, teacher_json, Toast.LENGTH_SHORT).show();
+                editor.commit();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
+
+    /*
+    init the fragment for uploading details
+     */
     public void initFrame(){
                Fragment selectedFragment = null;
-               selectedFragment=new init_teacher_Fragment(email,teacher,profile_teacher);
+               subjects=new ArrayList<>();
+               selectedFragment=new init_teacher_Fragment(email,teacher,subjects);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
 
 
     }
     DrawerLayout drawer;
     NavigationView navigationView;
-
+     /*
+     init the side navigation bar
+      */
     public void initNavigation(){
         drawer = findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.menu);
@@ -87,15 +123,26 @@ initNavigation();
                     intent.putExtra(con.teacher,gson.toJson(teacher));
                     startActivity(intent);
                 }
-                else if(item.getTitle().toString().equals("message")){
+                else if(item.getTitle().toString().equals("add message")){
                     Teacher_Dialogs teacher_dialogs=new Teacher_Dialogs(teacher_layout.this,teacher,email);
                     teacher_dialogs.add_Message();
+                }
+                else if(item.getTitle().toString().equals("my subjects")){
+                    initFrame();
+                    Teacher_Dialogs teacher_dialogs=new Teacher_Dialogs(teacher_layout.this,teacher,email,subjects);
+                    teacher_dialogs.subjects();
+                }
+                else if(item.getTitle().toString().equals("my ratings")){
+
                 }
                 return false;
             }
         });
 
     }
+    /*
+    init activity
+     */
     public void init(){
         add=(Button) findViewById(R.id.add);
         add.setOnClickListener(this);
@@ -107,7 +154,9 @@ initNavigation();
         sub.setOnClickListener(this);
         profile_teacher= findViewById(R.id.textView);
         profile_teacher.setOnClickListener(this);
+
        profile_teacher.setImageResource(R.drawable.profile);
+
         details=(Button) findViewById(R.id.details);
         details.setOnClickListener(this);
         SharedPreferences sp=getSharedPreferences("course",0);
@@ -118,7 +167,9 @@ initNavigation();
     }
     Dialog d;
     Button upload,save;
-
+    /*
+    upload profile picture dialog
+     */
     public void UpdateDialog(){
         d=new Dialog(this);
         d.setContentView(R.layout.update_student_details);
@@ -133,6 +184,9 @@ initNavigation();
     }
     private static final int PICK_IM=1;
     Uri uri;
+    /*
+    on profile picture pick
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -149,6 +203,9 @@ initNavigation();
             }
         }
     }
+    /*
+    upload profile picture to database
+     */
     public void processupload(Uri filepath)
     {
         final ProgressDialog pd=new ProgressDialog(this);
@@ -166,7 +223,7 @@ initNavigation();
                             public void onSuccess(Uri uri) {
                                 teacher.profile_url=uri.toString();
                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(con.teacher);
-                                databaseReference.child(con.emailStart(teacher.getEmail())).setValue(teacher);
+                                databaseReference.child(email).setValue(teacher);
                                 Toast.makeText(teacher_layout.this, "success", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
@@ -184,6 +241,7 @@ initNavigation();
                     }
                 });
     }
+
     @Override
     public void onClick(View v) {
         if(v==delete){

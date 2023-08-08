@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,17 +20,14 @@ import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.PersonController;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.PDF_Controller.Create_pdf;
-import com.example.dreamfood.Student_Controller.scrolling_activity;
-import com.example.dreamfood.Student_Controller.search;
-import com.example.dreamfood.Teacher_Controller.Teacher_home;
+import com.example.dreamfood.PresentaionLayer.Extend_Fitchers.PDF_Controller.Create_pdf;
 import com.example.dreamfood.Teacher_Controller.teacher_layout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +40,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     Spinner spinner;
-       MapView mapView;
+
 
     Button entrance,ADD,pdf,google;
     EditText email,password;
@@ -72,16 +70,20 @@ ImageView imageView;
 
 
     }
-    public void initImage(ImageView imageView){
-       imageView.setImageResource(R.drawable.class_1);
-    }
+
+    /*
+    init spinner
+     */
     public void initSpinner(){
         ArrayList<String> jobs=new ArrayList<String>();
-        jobs.add("teacher");jobs.add("student");
+        jobs.add(con.teacher);jobs.add(con.student);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_multichoice, jobs);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
     }
+    /*
+    init views
+     */
      public void initWidgets(){
          personController=new PersonController();
          imageView=findViewById(R.id.image);
@@ -167,14 +169,17 @@ ImageView imageView;
                                 editor.commit();
 
                                 if (item.equals("student")) {
-                                    Intent intent = new Intent(MainActivity.this, scrolling_activity.class);
-
-                                    startActivity(intent);
+                                    Intent intent = new Intent(MainActivity.this, this.getClass());
+                                     startActivity(intent);
                                 } else {
                                     Intent intent = new Intent(MainActivity.this, teacher_layout.class);
-
+                                    intent.putExtra("email",email.getText().toString());
+                                    Toast.makeText(MainActivity.this, email.getText().toString(), Toast.LENGTH_SHORT).show();
                                     startActivity(intent);
                                 }
+                            }
+                            else{
+                                Toast.makeText(MainActivity.this, "wrong field", Toast.LENGTH_SHORT).show();
                             }
                         }
                         catch (Exception e){
@@ -192,23 +197,7 @@ ImageView imageView;
                 }
             });
 
-           if(A) {
-               SharedPreferences sp=getSharedPreferences("email",0);
-               SharedPreferences.Editor editor=sp.edit();
-               editor.putString("email",email.getText().toString());
-               editor.commit();
-               Toast.makeText(MainActivity.this, "a", Toast.LENGTH_SHORT).show();
 
-               if (item.equals("student")) {
-                   Intent intent = new Intent(this, search.class);
-
-                   startActivity(intent);
-               } else {
-                   Intent intent = new Intent(this, Teacher_home.class);
-
-                   startActivity(intent);
-               }
-           }
 
 
 
@@ -225,21 +214,26 @@ ImageView imageView;
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==123){
-            Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
-            try{
+         //   Task<GoogleSignInAccount> task=GoogleSignIn.getSignedInAccountFromIntent(data);
+            GoogleSignIn.getSignedInAccountFromIntent(data).addOnSuccessListener(new OnSuccessListener<GoogleSignInAccount>() {
+                @Override
+                public void onSuccess(GoogleSignInAccount account) {
+                    Toast.makeText(MainActivity.this, account.getEmail(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                }
+            });
 
-               // Home();
-            }
-            catch (Exception e){
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
         }
     }
 Strings con=new Strings();
     private void Home() {
        // finish();
 
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(item);
+
         try {
 
         Intent intent=new Intent(this,Google_Signin_Activity.class);

@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".About_US.About_us">
+    tools:context=".PresentaionLayer.Abouy">
 
         <LinearLayout
             android:id="@+id/toolbarofspecificchat"
@@ -17,7 +17,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="72dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent" />
             <Button
                 android:layout_gravity="center"

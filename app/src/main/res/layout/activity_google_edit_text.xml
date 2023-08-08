@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
     android:layout_height="match_parent"
-    tools:context=".Google_Controller.Google_EditText">
+    tools:context=".PresentaionLayer.Extend_Fitchers.Google_Controller.Google_EditText">
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

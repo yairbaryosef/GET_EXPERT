@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Person;
 import com.example.dreamfood.BusinessLayer.PersonController;
-import com.example.dreamfood.Fragments.init_teacher_Fragment;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Fragments.init_teacher_Fragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.HashMap;
@@ -47,7 +47,7 @@ boolean isExsist=false;
     public void initFrame(){
         Fragment selectedFragment = null;
         if(!item.equals("")) {
-            selectedFragment = new init_teacher_Fragment(isExsist, item);
+            selectedFragment = new init_teacher_Fragment(isExsist, item,email.getText().toString());
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
         }

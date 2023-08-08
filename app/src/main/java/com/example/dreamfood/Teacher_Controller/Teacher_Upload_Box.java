@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Classes.fileinfomodel;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.PDF_Controller.Check_pdf;
+import com.example.dreamfood.PresentaionLayer.Extend_Fitchers.PDF_Controller.Check_pdf;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

@@ -20,16 +20,25 @@ import java.util.Hashtable;
 import java.util.Set;
 
 public class Pick_Materials_Adapter extends ArrayAdapter<grade> {
+    /*
+    constructor 1
+     */
     public Pick_Materials_Adapter(@NonNull Context context, ArrayList<grade> arrayList, Set<String> strings, Hashtable<String,grade> materials) {
         super(context, R.layout.pick_materials,R.id.text3, arrayList);
         mat=materials;
         keys=strings;
     }
+    /*
+   constructor 2
+    */
     public Pick_Materials_Adapter(@NonNull Context context, ArrayList<grade> arrayList,ArrayList<grade> grade) {
         super(context, R.layout.pick_materials,R.id.text3, arrayList);
     }
   Hashtable <String,grade> mat;
     Set<String> keys;
+    /*
+   generate adapter item
+    */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

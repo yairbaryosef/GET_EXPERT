@@ -6,7 +6,7 @@ import com.example.dreamfood.BusinessLayer.Classes.Rating.Rating;
 import com.example.dreamfood.BusinessLayer.Classes.fileinfomodel;
 import com.example.dreamfood.BusinessLayer.Classes.sub;
 import com.example.dreamfood.BusinessLayer.summary.Summary;
-import com.example.dreamfood.Materials.Chat.Profile_Adapter;
+import com.example.dreamfood.PresentaionLayer.Materials.Chat.Profile_Adapter;
 
 import java.util.ArrayList;
 
@@ -20,6 +20,7 @@ public class Teacher extends Person{
     public ArrayList<String> followers_names;
     public ArrayList<Rating> ratings;
     public ArrayList<Deal> deals;
+
     public ArrayList<Profile_Adapter.profile> messages;
     public ArrayList<fileinfomodel> tests;
     public ArrayList<Summary> summaries;
