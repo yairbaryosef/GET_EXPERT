@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Materials.Test.Test_result">
+    tools:context=".PresentaionLayer.Materials.Test.Test_result">
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

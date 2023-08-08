@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/Maroon"
     android:orientation="vertical"
-    tools:context=".Materials.Quiz.Quiz_One_Question_View">
+    tools:context=".PresentaionLayer.Materials.Quiz.Quiz_One_Question_View">
 
     <Button
         android:id="@+id/quiz"

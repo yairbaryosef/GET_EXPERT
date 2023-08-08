@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Materials.Record.Recordings">
+    tools:context=".PresentaionLayer.Materials.Record.Recordings">
     <LinearLayout
     android:id="@+id/toolbarofspecificchat"
     android:layout_width="match_parent"

@@ -16,7 +16,7 @@ import com.google.android.gms.wallet.PaymentsClient;
 
 import org.json.JSONObject;
 
-import com.example.dreamfood.util.PaymentsUtil;
+import com.example.dreamfood.PresentaionLayer.Extend_Fitchers.util.PaymentsUtil;
 
 public class CheckoutViewModel extends AndroidViewModel {
 

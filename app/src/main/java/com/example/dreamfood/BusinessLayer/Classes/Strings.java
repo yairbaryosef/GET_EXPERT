@@ -1,5 +1,7 @@
 package com.example.dreamfood.BusinessLayer.Classes;
 
+import android.content.Context;
+
 public class Strings {
     public  final  String teacher="teacher";
     public  final  String student="student";
@@ -32,27 +34,10 @@ public class Strings {
       }
         return "email";
     }
-    public String emails(String users){
-
-        String emailUsers="";
-        for(int i=0;i<users.length();i++){
-
-            boolean a=true;
-            while(!users.substring(i,i+1).equals(" ")){
-                if(users.substring(i,i+1).equals("@")){
-                    a=false;
-                }
-                if(a){
-                    emailUsers=emailUsers+users.substring(i,i+1);
-                }
-
-                i++;
-            }
-            emailUsers=emailUsers+" ";
-
-        }
-        return  emailUsers;
+    public String getEmail(Context context){
+        return context.getSharedPreferences("email",0).getString("email",null);
     }
+
 
 
 }

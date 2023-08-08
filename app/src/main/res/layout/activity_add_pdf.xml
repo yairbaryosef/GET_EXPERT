@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".PDF_Controller.add_pdf">
+    tools:context=".PresentaionLayer.Extend_Fitchers.PDF_Controller.add_pdf">
 
     <ImageView
         android:id="@+id/imagebrowse"

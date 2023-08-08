@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.dreamfood.BusinessLayer.Course;
 import com.example.dreamfood.BusinessLayer.Quiz;
-import com.example.dreamfood.Materials.Quiz.Open_Quiz;
+import com.example.dreamfood.PresentaionLayer.Materials.Quiz.Open_Quiz;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;

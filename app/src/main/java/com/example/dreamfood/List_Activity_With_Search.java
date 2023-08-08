@@ -15,7 +15,7 @@ import com.example.dreamfood.BusinessLayer.Classes.Coin;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.summary.Summary;
-import com.example.dreamfood.Materials.Pay.Coins_Adapter;
+import com.example.dreamfood.PresentaionLayer.Materials.Pay.Coins_Adapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

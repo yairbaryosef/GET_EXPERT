@@ -12,7 +12,7 @@ import com.example.dreamfood.BusinessLayer.Classes.Rating.Rating;
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.Fragments.List_Video_Fragment;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Fragments.List_Video_Fragment;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

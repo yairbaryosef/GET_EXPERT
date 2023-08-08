@@ -22,13 +22,12 @@ import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.Profile.Pick_A_Teacher;
 import com.example.dreamfood.BusinessLayer.Student;
-import com.example.dreamfood.BusinessLayer.Teacher;
 import com.example.dreamfood.Fragment_Activity_default;
 import com.example.dreamfood.Get_Started_Student;
 import com.example.dreamfood.List_Activity_With_Search;
-import com.example.dreamfood.Materials.Chat.OpenChat;
-import com.example.dreamfood.Materials.Quiz.Quiz_result;
-import com.example.dreamfood.Materials.Test.Test_result;
+import com.example.dreamfood.PresentaionLayer.Materials.Chat.OpenChat;
+import com.example.dreamfood.PresentaionLayer.Materials.Quiz.Quiz_result;
+import com.example.dreamfood.PresentaionLayer.Materials.Test.Test_result;
 import com.example.dreamfood.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -78,30 +77,16 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
 
             }
         });
-       databaseReference= FirebaseDatabase.getInstance().getReference(constants.teacher).child("OOP");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                teacher=snapshot.getValue(Teacher.class);
-                Gson gson=new Gson();
-                String st_json=gson.toJson(teacher);
-                SharedPreferences sp=getSharedPreferences(constants.teacher,0);
-                SharedPreferences.Editor editor=sp.edit();
-                editor.putString("teach",st_json);
-                editor.commit();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         initWidgets();
     }
 
-    Teacher teacher=new Teacher();
+
     CalendarView calendarView;
     Button getStarted,result;
+    /*
+    init views
+     */
     private void initWidgets(){
         follow=findViewById(R.id.follow);
         follow.setOnClickListener(this);
@@ -129,6 +114,9 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
    Dialog d;
    Button quiz,test;
    ListView list;
+   /*
+   show meetings for a day
+    */
     public void Date_Dialog(String day){
         d=new Dialog(this);
         d.setContentView(R.layout.videos_list);
@@ -153,6 +141,9 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
         list.setAdapter(arrayAdapter);
         d.show();
     }
+    /*
+    show result dialog
+     */
    public void ResultDialog(){
        d=new Dialog(this);
        d.setContentView(R.layout.results_student);
@@ -190,11 +181,7 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void Create_Dialog_Rate() {
-        d=new Dialog(this);
-        d.setContentView(R.layout.rating_dialog);
-        d.show();
-    }
+
 
 
     @Override
@@ -208,6 +195,8 @@ public class scrolling_activity extends AppCompatActivity implements View.OnClic
        else if(item.getTitle().toString().equals("chat")){
             Intent intent=new Intent(this, OpenChat.class);
             intent.putExtra("job","teacher");
+            Gson gson=new Gson();
+            intent.putExtra(constants.student,gson.toJson(student));
             startActivity(intent);
         }
         else if(item.getTitle().toString().equals("details")){

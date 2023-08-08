@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.dreamfood.Google_Controller.ADS">
+    tools:context=".PresentaionLayer.Extend_Fitchers.Google_Controller.ADS">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

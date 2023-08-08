@@ -8,29 +8,26 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
 
-    tools:context=".Materials.Quiz.Open_Quiz">
+    tools:context=".PresentaionLayer.Materials.Quiz.Open_Quiz">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#FBC02D"
-        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="58dp" />
 
-    <TextView
-        android:layout_width="293dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:background="@drawable/circle2"
-        android:gravity="center"
-        android:text="open Quiz"
-        android:textSize="40dp" />
+        <TextView
+            android:layout_width="340dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_purple"
+            android:gravity="center"
+            android:text="OPEN QUIZ"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="40dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -136,8 +133,11 @@
         android:layout_width="154dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/circle2"
+
         android:text="add quiz"
+        android:background="@drawable/circle_purple"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="25dp" />
 
     <TextView

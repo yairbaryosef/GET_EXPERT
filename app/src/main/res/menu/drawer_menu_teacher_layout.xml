@@ -11,5 +11,14 @@
         <item
             android:id="@+id/message"
             android:title="add message"
-            android:icon="@drawable/communications"/>
+            android:icon="@drawable/mail"/>
+        <item
+            android:id="@+id/subjects"
+            android:title="my subjects"
+            android:icon="@drawable/bookmark"/>
+        <item
+            android:id="@+id/rating"
+            android:title="my ratings"
+            android:icon="@drawable/rating"/>
+
 </menu>

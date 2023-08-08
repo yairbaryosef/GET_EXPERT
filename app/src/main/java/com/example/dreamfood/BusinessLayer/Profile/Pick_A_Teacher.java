@@ -15,7 +15,7 @@ import androidx.appcompat.widget.SearchView;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.Materials.Chat.Profile_Adapter;
+import com.example.dreamfood.PresentaionLayer.Materials.Chat.Profile_Adapter;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,9 +53,15 @@ hashtable=new Hashtable<>();
         DatabaseReference myRef=database.getReference(job);
        arrayList=new ArrayList<String>();
         myRef.addValueEventListener(new ValueEventListener() {
+            /*
+            init profiles
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    /*
+                    init students array
+                     */
                     if(job.equals(strings.student)) {
                         try {
                             arrayList.add(snapshot1.getKey());
@@ -64,6 +70,9 @@ hashtable=new Hashtable<>();
                             Toast.makeText(Pick_A_Teacher.this, "failed", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    /*
+                    init teachers array
+                     */
                     else{
                         try {
                             arrayList.add(snapshot1.getKey());
@@ -80,6 +89,9 @@ hashtable=new Hashtable<>();
                         }
                     }
                 }
+                /*
+                    init teachers list with search
+                     */
                 if(job.equals(strings.teacher)){
                  profile_adapter=new Profile_Adapter(Pick_A_Teacher.this,profiles);
                     listView.setAdapter(profile_adapter);
@@ -120,6 +132,9 @@ hashtable=new Hashtable<>();
                         }
                     });
                 }
+                /*
+                    init students list with search
+                     */
                 else {
                     dataAdapter = new ArrayAdapter<String>(Pick_A_Teacher.this, android.R.layout.simple_list_item_1, arrayList);
                     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -148,6 +163,9 @@ hashtable=new Hashtable<>();
 
     }
     Profile_Adapter profile_adapter;
+    /*
+    init views
+     */
     public void init(){
         profiles=new ArrayList<>();
         open=(Button)findViewById(R.id.chat);

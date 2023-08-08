@@ -13,13 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.List_Activity_With_Search;
-import com.example.dreamfood.Materials.Chat.OpenChat;
-import com.example.dreamfood.Materials.Meeting.OpenZoom;
-import com.example.dreamfood.Materials.Quiz.Add_Quiz;
-import com.example.dreamfood.Materials.Record.Recording_class;
-import com.example.dreamfood.Materials.Record.Recordings;
-import com.example.dreamfood.Materials.Test.Open_Test;
-import com.example.dreamfood.Materials.summary.Add_summary;
+import com.example.dreamfood.PresentaionLayer.Materials.Chat.OpenChat;
+import com.example.dreamfood.PresentaionLayer.Materials.Meeting.OpenZoom;
+import com.example.dreamfood.PresentaionLayer.Materials.Quiz.Add_Quiz;
+import com.example.dreamfood.PresentaionLayer.Materials.Record.Add_Recording;
+import com.example.dreamfood.PresentaionLayer.Materials.Record.Recording_class;
+import com.example.dreamfood.PresentaionLayer.Materials.Record.Recordings;
+import com.example.dreamfood.PresentaionLayer.Materials.Test.Open_Test;
+import com.example.dreamfood.PresentaionLayer.Materials.summary.Add_summary;
 import com.example.dreamfood.Message;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +50,7 @@ String type="";
         test= findViewById(R.id.test);
         test.setOnClickListener(this);
         record=findViewById(R.id.record);
-       // record.setOnClickListener(this);
+        record.setOnClickListener(this);
         summary=findViewById(R.id.summary);
         summary.setOnClickListener(this);
     }
@@ -86,7 +87,9 @@ String type="";
 
             }
             else {
-                DialogAddRecord();
+                Intent intent = new Intent(this, Add_Recording.class);
+                intent.putExtra("email", "summary");
+                startActivity(intent);
             }
         }
         if(v==add){

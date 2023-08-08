@@ -21,7 +21,7 @@ import com.example.dreamfood.BusinessLayer.Classes.Strings;
 import com.example.dreamfood.BusinessLayer.Meeting;
 import com.example.dreamfood.BusinessLayer.Student;
 import com.example.dreamfood.BusinessLayer.Teacher;
-import com.example.dreamfood.Dialogs.Pay_Dialog;
+import com.example.dreamfood.PresentaionLayer.Layouts_Controllers.Dialogs.Pay_Dialog;
 import com.example.dreamfood.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -144,7 +144,7 @@ student=gson.fromJson(st,Student.class);
         try {
             myPdfDocument.writeTo(new FileOutputStream(myFile));
             student.meetings.remove(meeting);
-            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.student).child(constants.emailStart(student.getEmail()));
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference(constants.student).child(student.getEmail());
             databaseReference.setValue(student);
             Toast.makeText(getContext(), myFilePath, Toast.LENGTH_SHORT).show();
         }

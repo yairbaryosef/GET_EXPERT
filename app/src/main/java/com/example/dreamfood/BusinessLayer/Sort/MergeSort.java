@@ -9,9 +9,15 @@ import java.util.Hashtable;
 public class MergeSort
 {
     public Hashtable<Number,ArrayList<Meeting>> meetingHashtable;
+    /*
+    constructor
+     */
     public MergeSort(){
         meetingHashtable=new Hashtable<>();
     }
+    /*
+    sorting by type
+     */
     public void Merge(ArrayList<Meeting> meetings,String order){
 
         if(order.equals("Coming soon")) {
@@ -70,6 +76,9 @@ public class MergeSort
             }
         }
     }
+    /*
+    merge sort price  - sort part
+     */
     public void sort(double arr[],int l,int r){
         if (l < r) {
             // Find the middle point
@@ -83,6 +92,9 @@ public class MergeSort
             merge(arr, l, m, r);
         }
     }
+    /*
+   merge sort price  - merge sorted arrays
+    */
     public void merge(double arr[], int l, int m, int r)
     {
         // Find sizes of two subarrays to be merged
@@ -132,6 +144,9 @@ public class MergeSort
             k++;
         }
     }
+    /*
+    merge sort time - sort part
+     */
     public void sort(long arr[],int l,int r){
         if (l < r) {
             // Find the middle point
@@ -145,6 +160,9 @@ public class MergeSort
             merge(arr, l, m, r);
         }
     }
+    /*
+  merge sort time  - merge sorted arrays
+   */
     public void merge(long arr[], int l, int m, int r)
     {
         // Find sizes of two subarrays to be merged

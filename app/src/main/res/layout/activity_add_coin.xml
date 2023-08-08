@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
 
-    tools:context=".Materials.Pay.Add_Coin_Activity">
+    tools:context=".PresentaionLayer.Materials.Pay.Add_Coin_Activity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

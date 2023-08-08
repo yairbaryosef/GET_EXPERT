@@ -1,7 +1,5 @@
 package com.example.dreamfood.BusinessLayer;
 
-import java.util.regex.Pattern;
-
 public class Person {
 
     public String getUni() {
@@ -102,6 +100,7 @@ public class Person {
         this.name="";
         password="";
         city="";
+
         Loggedin=false;
     }
 
@@ -115,15 +114,7 @@ public class Person {
         Loggedin = loggedin;
     }
 
-    public boolean ValidateEmail(String email){
 
-        Pattern pattern=Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
-        if(pattern.matcher(pattern.pattern()).matches()){
-
-        }
-        return false;
-
-    }
 
 
 }

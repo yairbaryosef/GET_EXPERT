@@ -8,7 +8,7 @@
     android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
 
     android:layout_height="match_parent"
-    tools:context=".Materials.Test.Open_Test">
+    tools:context=".PresentaionLayer.Materials.Test.Open_Test">
 
     <TextView
         android:layout_width="match_parent"
